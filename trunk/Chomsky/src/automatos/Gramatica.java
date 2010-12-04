@@ -1,6 +1,8 @@
 package automatos;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class Gramatica {
@@ -34,10 +36,8 @@ public class Gramatica {
 	
 	public Simbolo<Integer> gerarProximoSimboloNaoTerminal() {
 		Integer maior;
-		if (simbNaoTerminais.isEmpty()) {
-			maior = 0;
-		} else {
-			maior = simbNaoTerminais.get(0).valor;
+		maior = 0;
+		if (!simbNaoTerminais.isEmpty()) {
 			for (Simbolo<Integer> simbolo : simbNaoTerminais) {
 				if (simbolo.valor > maior) {
 					maior = simbolo.valor;
@@ -50,40 +50,52 @@ public class Gramatica {
 	
 	@Override
 	public String toString() {
-		String str = "G = (N, E, R, S)\n";
+		Collections.sort(simbNaoTerminais);
+		Collections.sort(alfabeto);
+		Collections.sort(regras);
 		
+		String str = "Gramática G = (N, E, R, S). N: Simb. Não terminais; E: Alfabeto; R: Regras; S: Simb. Inicial\n";
+		
+		//Simbolos não terminais:
 		str += "N = {";
-		for (int i = 0; i < simbNaoTerminais.size(); i++) {
-			Simbolo<Integer> simbNaoTerminal = simbNaoTerminais.get(i);
+		Iterator<Simbolo<Integer>> simbNaoTerminaisIt = simbNaoTerminais.iterator();
+		while (simbNaoTerminaisIt.hasNext()) {
+			Simbolo<Integer> simbNaoTerminal  = (Simbolo<java.lang.Integer>) simbNaoTerminaisIt.next();
 			str += simbNaoTerminal;
-			if (i < simbNaoTerminais.size() - 1) {
+			if (simbNaoTerminaisIt.hasNext()) {
 				str += ", ";
 			}
 		}
 		str += "}\n";
 		
+		//Simbolo inicial:
+		str += "S = " + simbInicial + "\n";
+		
+		//Alfabeto:
 		str += "E = {";
-		for (int i = 0; i < alfabeto.size(); i++) {
-			Simbolo<String> simbTerminal = alfabeto.get(i);
+		Iterator<Simbolo<String>> alfabetoIt = alfabeto.iterator();
+		while (alfabetoIt.hasNext()) {
+			Simbolo<String> simbTerminal = alfabetoIt.next();
 			str += simbTerminal;
-			if (i < alfabeto.size() - 1) {
+			if (alfabetoIt.hasNext()) {
 				str += ", ";
 			}
 		}
 		str += "}\n";
 		
+		//Regras
 		str += "R = {\n"; 
-		for (int i = 0; i < regras.size(); i++) {
-			Regra regra = regras.get(i);
+		Iterator<Regra> regrasIt = regras.iterator();
+		while (regrasIt.hasNext()) {
+			Regra regra = regrasIt.next();
 			str += "\t" + regra;
-			if (i < regras.size() - 1) {
-				str += ", ";
-			}
+//			if (regrasIt.hasNext()) {
+//				str += ", ";
+//			}
 			str += "\n";
 		}
-		str += "}\n";
+		str += "}";
 		
-		str += "S = " + simbInicial;
 		return str;
 	}
 }

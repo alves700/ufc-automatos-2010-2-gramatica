@@ -1,6 +1,7 @@
 package automatos;
 
-public class Simbolo<Tipo> {
+public class Simbolo<Tipo extends Comparable<Tipo>> implements Comparable<Simbolo<Tipo>> {
+	
 	public Tipo valor;
 	public boolean terminal;
 	
@@ -41,5 +42,10 @@ public class Simbolo<Tipo> {
 	@Override
 	public String toString() {
 		return valor.toString();
+	}
+
+	@Override
+	public int compareTo(Simbolo<Tipo> o) {
+		return valor.compareTo(o.valor);
 	}
 }
