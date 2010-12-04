@@ -1,6 +1,6 @@
 GRAMATICA FEITA COM OS ELEMENTOS ATUAIS
 
-Operadores nossos não funcionam como parênteses(até agora)
+Operadores nossos não funcionam com parênteses(até agora)
 
 V={if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE}
 terminais{if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.}
