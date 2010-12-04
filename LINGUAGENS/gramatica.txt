@@ -2,8 +2,8 @@ GRAMATICA FEITA COM OS ELEMENTOS ATUAIS
 
 Operadores nossos não funcionam com parênteses(até agora)
 
-V={if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE}
-terminais{if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.}
+V={if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while}
+terminais{if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while}
 
 Regras:
 ---Operações---
@@ -23,14 +23,15 @@ E-> F!=F
 ---Bloco Statements---
 S-> F S
 S-> I S
+S-> W S
 S-> e
 ---Bloco If----
 I->if E then S IE
 I->e
 IE->else S end
 IE->end
-
-
-
+---Bloco While----
+W-> while E then S end
+W-> e
 
 
