@@ -4,4 +4,30 @@ r={if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,
 Inicio={p}
 final={q}
 Transições:
-{((p,e,e),(
+-------Inicio--------
+	(p,e,e),(q,C)
+
+-------Desempilhar Caso não terminais, para expor os terminais-------
+	(q,if,if),(q,e)
+	(q,then,then),(q,e)
+	(q,else,else),(q,e)
+	(q,end,end),(q,e)
+	(q,Id,Id),(q,e)
+	(q,<,<),(q,e)
+	(q,>,>),(q,e)
+	(q,<=,<=),(q,e)
+	(q,>=,>=),(q,e)
+	(q,==,==),(q,e)
+	(q,!=,!=),(q,e)
+	(q,+,+),(q,e)
+	(q,*,*),(q,e)
+	(q,%,%),(q,e)
+	(q,/,/),(q,e)
+	(q,-,-),(q,e)
+	(q,.,.),(q,e)	
+	(q,while,while),(q,e)
+	(q,for,for),(q,e)
+	(q,(,(),(q,e)
+	(q,),)),(q,e)
+	(q,;,;),(q,e)
+				
