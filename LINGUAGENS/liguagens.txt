@@ -9,3 +9,7 @@ if<Expression> then
 else
 <Statements>
 end
+-----------------------------
+Observações: Cada statement são Operações,laços e etc....
+cada operação é finalizada por um "." tipo "i=i+1." 
+
