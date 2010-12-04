@@ -3,7 +3,6 @@ package automatos;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Chomsky {
@@ -23,21 +22,22 @@ public class Chomsky {
 			Regra regraLonga = (Regra) regrasIt.next();
 			//Se for uma regra longa, transforma-a em regras curtas:
 			if (regraLonga.direita.size() >= 3) {
-				Simbolo<Integer> esquerdaNovaRegraCurta = regraLonga.esquerda;
+				Simbolo<Integer> simbEsquerdaNovaRegraCurta = regraLonga.esquerda;
 				//Para cada simbolo da regra longa, cria uma nova regra curta:
 				for (int i = 0; i < regraLonga.direita.size() - 1; i++) {
 					Simbolo<?> simbolo = regraLonga.direita.get(i);
-					Regra regraCurta = new Regra(esquerdaNovaRegraCurta);
+					Regra regraCurta = new Regra(simbEsquerdaNovaRegraCurta);
 					regraCurta.direita.add(simbolo);
 
 					/* Adiciona simbolo não terminal para a próxima regra curta
 					 * caso esta não seja a última regra curta
 					 */
-					if (i < regraLonga.direita.size() - 1) {
-						esquerdaNovaRegraCurta = g.gerarProximoSimboloNaoTerminal(); 
-						regraCurta.direita.add(esquerdaNovaRegraCurta);
+					if (i < regraLonga.direita.size() - 2) {
+						simbEsquerdaNovaRegraCurta = g.gerarProximoSimboloNaoTerminal();
+						g.addSimbNaoTerminal(simbEsquerdaNovaRegraCurta);
+						regraCurta.direita.add(simbEsquerdaNovaRegraCurta);
 					} else {
-						esquerdaNovaRegraCurta = null;
+						simbEsquerdaNovaRegraCurta = null;
 						regraCurta.direita.add(regraLonga.direita.get(i + 1));
 					}
 					novasRegras.add(regraCurta);
