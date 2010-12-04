@@ -16,6 +16,7 @@ Id {<,>,<=,>=,==,!=}Id
 -------Bloco de seleção(Selection)------
 if<Expression> then 
 <Statements>
+{elseif<Expression> then <Statements>}
 else
 <Statements>
 end
