@@ -1,3 +1,9 @@
+
+
+------Sintaxe de Expressões-----
+Term {<,>,<=,>=,==,!=}Term
+
+-------Bloco de seleção------
 if<Expression> then 
 <Statements>
 else
