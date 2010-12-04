@@ -8,6 +8,7 @@ terminais{if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while,for,(,),;,progra
 Regras:
 ---Inicio----
 C->start program S end
+C->e
 ---Operações---
 F-> Id+F
 F-> Id-F

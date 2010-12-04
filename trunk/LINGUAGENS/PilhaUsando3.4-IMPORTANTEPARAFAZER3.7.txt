@@ -1,5 +1,7 @@
 V={p,q}
 entrada={if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while,for,(,),;}
-r={if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,WF}
+r={if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,WF,C}
 Inicio={p}
 final={q}
+Transições:
+{((p,e,e),(
