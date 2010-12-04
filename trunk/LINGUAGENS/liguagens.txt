@@ -4,6 +4,8 @@ Legendas
 <Repetition> = bloco de repetição
 <Operator> = Bloco de operações
 <Expression> = Bloco de Expressões
+| = ou
+
 
 -------Operações(Operator)----------------
 Id = Id(+,*,%,/,-)id.
@@ -25,5 +27,6 @@ Operators {<Selection>|<Repetition>}
 while E then
 <statements>
 end
+
 
 
