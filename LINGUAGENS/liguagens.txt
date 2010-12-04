@@ -27,6 +27,10 @@ Operators {<Selection>|<Repetition>}
 while E then
 <statements>
 end
+|
+for(Id ; Expression ; Operator) then
+<statements>
+end
 
 
 
