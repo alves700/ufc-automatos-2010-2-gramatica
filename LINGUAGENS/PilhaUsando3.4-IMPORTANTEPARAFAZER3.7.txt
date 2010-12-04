@@ -3,6 +3,7 @@ entrada={if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while,for,(,),;,program
 r={if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,WF,C,program,start}
 Inicio={p}
 final={q}
+
 Transições:
 -------Inicio--------
 1	(p,e,e),(q,C)
