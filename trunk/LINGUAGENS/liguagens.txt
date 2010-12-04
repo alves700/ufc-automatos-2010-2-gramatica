@@ -1,15 +1,19 @@
+Legendas
+{w} = w pode ser ou não utilizado
 
+-------Operações(Operator)----------------
+Id = Id(+,*,%,/,-)id.
 
-------Sintaxe de Expressões-----
+------Sintaxe de Expressões(Expression)-----
 Term {<,>,<=,>=,==,!=}Term
 
--------Bloco de seleção------
+-------Bloco de seleção(Selection)------
 if<Expression> then 
 <Statements>
 else
 <Statements>
 end
------------------------------
-Observações: Cada statement são Operações,laços e etc....
-cada operação é finalizada por um "." tipo "i=i+1." 
+---------Statements------------------
+Operators {<Selection>}
 
+------------------------------------
