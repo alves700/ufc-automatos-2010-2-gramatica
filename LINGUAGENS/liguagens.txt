@@ -2,10 +2,17 @@ Legendas
 {w} = w pode ser ou não utilizado
 <Selection> = bloco de seleção
 <Repetition> = bloco de repetição
-<Operator> = Bloco de operações
-<Expression> = Bloco de Expressões
+<Operator> = Bloco de operação
+<Expression> = Bloco de Expressão
+<Selections> = blocos de seleção
+<Repetitions> = blocos de repetição
+<Operators> = Blocos de operações
+<Expressions> = Blocos de Expressões
 | = ou
-
+-------Inicio do programa-------
+program start
+<statements>
+end
 
 -------Operações(Operator)----------------
 Id = Id(+,*,%,/,-)id.
@@ -22,7 +29,7 @@ else
 end
 
 ---------Statements------------------
-Operators {<Selection>|<Repetition>}
+<Operators> {<Selection>|<Repetition>}
 
 ---------Bloco de repetição(Repetition)----------
 while E then
