@@ -5,7 +5,7 @@ Legendas
 Id = Id(+,*,%,/,-)id.
 
 ------Sintaxe de Expressões(Expression)-----
-Term {<,>,<=,>=,==,!=}Term
+Id {<,>,<=,>=,==,!=}Id 
 
 -------Bloco de seleção(Selection)------
 if<Expression> then 

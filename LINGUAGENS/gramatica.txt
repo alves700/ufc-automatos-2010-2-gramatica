@@ -1,0 +1,26 @@
+GRAMATICA FEITA COM OS ELEMENTOS ATUAIS
+Operadores nossos não funcionam como parênteses
+V={if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E}
+terminais{if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-}
+Regras:
+---Operações---
+F-> Id+F
+F-> Id-F
+F-> Id/F
+F-> Id%F
+F-> Id*F
+F-> Id
+---Expressões---
+E-> F>F
+E-> F<F
+E-> F>=F
+E-> F<=F
+E-> F==F
+E-> F!=F
+---Bloco If----
+
+
+
+
+
+
