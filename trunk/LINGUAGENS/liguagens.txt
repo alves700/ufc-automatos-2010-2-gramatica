@@ -1,5 +1,9 @@
 Legendas
 {w} = w pode ser ou não utilizado
+<Selection> = bloco de seleção
+<Repetition> = bloco de repetição
+<Operator> = Bloco de operações
+<Expression> = Bloco de Expressões
 
 -------Operações(Operator)----------------
 Id = Id(+,*,%,/,-)id.
@@ -13,7 +17,13 @@ if<Expression> then
 else
 <Statements>
 end
----------Statements------------------
-Operators {<Selection>}
 
-------------------------------------
+---------Statements------------------
+Operators {<Selection>|<Repetition>}
+
+---------Bloco de repetição(Repetition)----------
+while E then
+<statements>
+end
+
+
