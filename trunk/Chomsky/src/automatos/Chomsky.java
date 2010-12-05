@@ -12,8 +12,6 @@ public class Chomsky {
 
    public static void construirGramaticaChomsky(Gramatica g) {
       eliminarRegrasLongas(g);
-      System.out.println("STRING DEPOIS DA PRIMEIRA FASE:");
-      System.out.println(g.toString());
       eliminarRegraE(g);
    }
 
@@ -78,29 +76,7 @@ public class Chomsky {
     	  }
     	  tamanhoAtual = set.size();
       }while((tamanhoAtual - tamanhoAntigo) > 0); //se nenhum elemento foi adicionado, sai do laco.
-      System.out.println("CONJUNTO NE:");
-      System.out.println(set.toString());
-      // enquanto existir uma regraIt A->alfa com alfa pertencente a Ne*
       
-      /*
-      while (regraIt.hasNext()) {
-         Regra atual = (Regra) regraIt.next();
-         if (atual.direita.size() == 1) {
-            // pelo que entendi, alfa = e(vazio)
-
-            // se a regraIt eh do tipo X->e onde 'e' é vazio
-            // o vetor de regras tem tamanho 1
-            // 'e' sempre é terminal
-            if (atual.direita.get(0).equals(e)) {
-               // adicione alfa ao conjunto Ne
-               set.add(atual.esquerda);
-               // regraIt vazia 'marcada' para ser eliminada
-               regrasVazia.add(atual);
-            }
-         }
-      }
-      */
-
       // feito o conjunto Ne
       // excluir de G todas as regras vazias
       for (Regra r : regrasVazia) {
@@ -117,55 +93,24 @@ public class Chomsky {
     			  Simbolo<?> s = (!set.contains(regra.direita.get(0))) ? regra.direita.get(0):regra.direita.get(1);
     			  nova.addSimboloDireita(s); //adiciona o simbolo q nao esta no conjunto dos terminais, a direita da regra.
 
-    			  outrasRegras.add(nova); //Marca para posterior adicao a gramatica.
+    			  if(!outrasRegras.contains(nova))
+    				  outrasRegras.add(nova); //Marca para posterior adicao a gramatica.
     			  
     			  //DUVIDA NESSA PARTE, NAO ENTENDI O LIVRO: CASO: A->BC onde B e C estao em NE
     			  //DEVE SER ADICIONADO TANTO A->B quanto A->C, OU BASTA UM DOS DOIS?
-    			  
-    			  /*if (set.contains(regra.direita.get(0)) && set.contains(regra.direita.get(1))) {
+    			  if (set.contains(regra.direita.get(0)) && set.contains(regra.direita.get(1))) {
     				  nova = new Regra(regra.esquerda);
     				  s = regra.direita.get(0);
-    				  outrasRegras.add(nova);
+    				  nova.addSimboloDireita(s);
+    				  if (!outrasRegras.contains(nova))
+    					  outrasRegras.add(nova);
     			  }
-    			  */
     		  }
     	  }
       }
       for (Regra regra : outrasRegras) {
     	  g.addRegra(regra);
       }
-      
-      
-      
-      
-      /*
-      // criamos A->C
-      for (Regra regra : novasRegras) {
-
-         // para uma regra de tamanho 2
-         if (regra.direita.size() == 2) {
-            Simbolo naoTerminalEsquerda = regra.esquerda;
-            Simbolo naoTerminalDireitaVazio = regra.direita.get(0);
-            Simbolo naoTerminalDireita = regra.direita.get(1);
-
-            Regra novaRegra = new Regra(naoTerminalEsquerda);
-            // para cada regraIt A-> BC ou A->CB
-            // para B pertencente a Ne, ou seja, vazio
-            // para C pertecente a V(alfabeto)
-            if ((set.contains(naoTerminalDireitaVazio)) && (g.alfabeto.contains(naoTerminalDireita))) {
-
-               // se o simbolo naoTerminalDireita pertence ao alfabeto da Gramatica, ele é adicionado
-               novaRegra.addSimboloDireita(naoTerminalDireita);
-            } else if ((set.contains(naoTerminalDireita)) && (g.alfabeto.contains(naoTerminalDireitaVazio))) {
-
-               // se o simbolo naoTerminalDireitaVazio pertence ao alfabeto da Gramatica, ele é adicionado
-               novaRegra.addSimboloDireita(naoTerminalDireitaVazio);
-            }
-            g.addRegra(novaRegra);
-         } else {
-         }
-      }
-      */
    }
    private static void eliminarRegrasCurtas(Gramatica g) {
 	 //parte 3, montando conjuntos D{X} = { B: X->*B } pra todo X pertencente a V
