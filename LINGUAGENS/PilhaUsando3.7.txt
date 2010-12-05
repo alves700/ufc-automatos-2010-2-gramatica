@@ -42,3 +42,4 @@ APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA
 ----------Para tirar essa ambiguidade precisamos modificar as transições existentes e adicionar novas transições-------
 ----------Vamos utilizar primeiramente a estratégia LookAhead($)-----------
 
+
