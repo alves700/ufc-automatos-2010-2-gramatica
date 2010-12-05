@@ -12,6 +12,8 @@ public class Chomsky {
 
    public static void construirGramaticaChomsky(Gramatica g) {
       eliminarRegrasLongas(g);
+      System.out.println("STRING DEPOIS DA PRIMEIRA FASE:");
+      System.out.println(g.toString());
       eliminarRegraE(g);
    }
 
@@ -54,7 +56,6 @@ public class Chomsky {
     * passos do exemplo 3.6.1 - pag 152
     */
    private static void eliminarRegraE(Gramatica g) {
-      Iterator<Regra> regraIt = g.regras.iterator();
       HashSet<Simbolo<?>> set = new HashSet<Simbolo<?>>();
 
       // regras que deverao ser eliminadas
@@ -71,13 +72,14 @@ public class Chomsky {
     	  tamanhoAntigo = set.size();
     	  for(Regra atual : g.regras) { //Da uma volta a procura de elementos para serem adicionados, se possivel adiciona.
     		  if(set.containsAll(atual.direita)) {
-    			  regrasVazia.add(atual);
+    			  if(atual.direita.size() == 1 && atual.direita.get(0).terminal) regrasVazia.add(atual);
     			  set.add(atual.esquerda);
     		  }
     	  }
     	  tamanhoAtual = set.size();
       }while((tamanhoAtual - tamanhoAntigo) > 0); //se nenhum elemento foi adicionado, sai do laco.
-
+      System.out.println("CONJUNTO NE:");
+      System.out.println(set.toString());
       // enquanto existir uma regraIt A->alfa com alfa pertencente a Ne*
       
       /*
@@ -105,22 +107,32 @@ public class Chomsky {
          g.regras.remove(r);
       }
 
-      List<Regra> novasRegras = new ArrayList<Regra>();
-      
-      novasRegras = g.regras;
+      List<Regra> outrasRegras = new ArrayList<Regra>();
 
-      
-    
       //Procura regras A->CB | A->BC onde B pertence a Ne e C nao (foi o q eu entendi)
-      for(Regra regra : novasRegras) { //Cria regras novas de acordo com o comentario acima e aiciona a novas regras.
+      for(Regra regra : g.regras) { //Cria regras novas de acordo com o comentario acima e aiciona a novas regras.
     	  if (regra.direita.size() == 2) { //regra com 2 caracteres...
-    		  if(set.contains(regra.direita.get(0)) ^ set.contains(regra.direita.get(1))) { //se apenas um dos 2 esta no conjunto
+    		  if(set.contains(regra.direita.get(0)) || set.contains(regra.direita.get(1))) { //se um dos 2 esta no conjunto
     			  Regra nova = new Regra(regra.esquerda); //cria uma regra
     			  Simbolo<?> s = (!set.contains(regra.direita.get(0))) ? regra.direita.get(0):regra.direita.get(1);
-    			  nova.addSimboloDireita(s); //adiciona o simbolo q nao esta no conjunto dos terminais a direita da regra.
-    			  g.addRegra(nova); //adiciona regra a gramatica.
+    			  nova.addSimboloDireita(s); //adiciona o simbolo q nao esta no conjunto dos terminais, a direita da regra.
+
+    			  outrasRegras.add(nova); //Marca para posterior adicao a gramatica.
+    			  
+    			  //DUVIDA NESSA PARTE, NAO ENTENDI O LIVRO: CASO: A->BC onde B e C estao em NE
+    			  //DEVE SER ADICIONADO TANTO A->B quanto A->C, OU BASTA UM DOS DOIS?
+    			  
+    			  /*if (set.contains(regra.direita.get(0)) && set.contains(regra.direita.get(1))) {
+    				  nova = new Regra(regra.esquerda);
+    				  s = regra.direita.get(0);
+    				  outrasRegras.add(nova);
+    			  }
+    			  */
     		  }
     	  }
+      }
+      for (Regra regra : outrasRegras) {
+    	  g.addRegra(regra);
       }
       
       
@@ -163,7 +175,6 @@ public class Chomsky {
     	  //cria o grupo do nao terminal e adiciona na lista de conjuntos.
     	  conjuntosD.add(new HashSet<Simbolo<?>>());
     	  conjuntosD.get(i).add(g.simbNaoTerminais.get(i));
-    	  
     	  int tamAntigo = conjuntosD.get(i).size();
 
     	  do { //Algoritmo de fechamento.
