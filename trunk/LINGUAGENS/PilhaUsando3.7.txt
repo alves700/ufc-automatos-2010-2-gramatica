@@ -1,4 +1,44 @@
 LSBR Language Stack Specification
-FALTA FAZER!!!
+FALTA FAZER O RESTO!!!
 APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA O ABRAÇO!! :D
+----------------------------------------
+------Tirar transições ambiguas--------
+------Todos essa transições são ambiguas-----
+------Separado pelos espaços as transições ambiguas---------
+26	(q,e,C),(q,start program S end)	
+27	(q,e,C),(q,e)	
+
+28	(q,e,F),(q,Id+F)
+29	(q,e,F),(q,Id-F)
+30	(q,e,F),(q,Id*F)
+31	(q,e,F),(q,Id/F)
+32	(q,e,F),(q,Id%F)
+33	(q,e,F),(q,Id.)
+
+34	(q,e,E),(q,F>F)
+35	(q,e,E),(q,F<F)
+36	(q,e,E),(q,F>=F)
+37	(q,e,E),(q,F<=F)
+38	(q,e,E),(q,F==F)
+39	(q,e,E),(q,F!=F)
+
+40	(q,e,S),(q,F S)
+41	(q,e,S),(q,I S)
+42	(q,e,S),(q,W S)
+43	(q,e,S),(q,WF S)
+44	(q,e,S),(q,e)
+
+45	(q,e,I),(q,if E then S IE)
+46	(q,e,I),(q,e)
+
+47	(q,e,IE),(q,elseif E then S IE end)
+48	(q,e,IE),(q,else S end)
+49	(q,e,IE),(q,end)
+
+50	(q,e,W),(q,while E then S end)
+51	(q,e,W),(q,e)
+52	(q,e,W),(q,for(Id;E;Id=F) then S end)
+53	(q,e,W),(q,e)
+----------Para tirar essa ambiguidade precisamos modificar as transições existentes e adicionar novas transições-------
+----------Vamos utilizar primeiramente a estratégia LookAhead($)-----------
 

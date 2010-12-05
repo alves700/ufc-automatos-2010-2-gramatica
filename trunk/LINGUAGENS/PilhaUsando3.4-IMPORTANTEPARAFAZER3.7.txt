@@ -1,9 +1,8 @@
 V={p,q}
-entrada={if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while,for,(,),;,program,start}
-r={if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,WF,C,program,start}
+entrada={elseif,if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while,for,(,),;,program,start}
+r={elseif,if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,WF,C,program,start}
 Inicio={p}
 final={q}
-
 Transições:
 -------Inicio--------
 1	(p,e,e),(q,C)
@@ -56,10 +55,11 @@ Transições:
 44	(q,e,S),(q,e)
 45	(q,e,I),(q,if E then S IE)
 46	(q,e,I),(q,e)
-47	(q,e,IE),(q,else S end)
-48	(q,e,IE),(q,end)
-49	(q,e,W),(q,while E then S end)
-50	(q,e,W),(q,e)
-51	(q,e,W),(q,for(Id;E;Id=F) then S end)
-52	(q,e,W),(q,e)
+47	(q,e,IE),(q,elseif E then S IE end)
+48	(q,e,IE),(q,else S end)
+49	(q,e,IE),(q,end)
+50	(q,e,W),(q,while E then S end)
+51	(q,e,W),(q,e)
+52	(q,e,W),(q,for(Id;E;Id=F) then S end)
+53	(q,e,W),(q,e)
 	
