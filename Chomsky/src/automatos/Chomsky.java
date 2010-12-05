@@ -55,18 +55,32 @@ public class Chomsky {
     */
    private static void eliminarRegraE(Gramatica g) {
       Iterator<Regra> regraIt = g.regras.iterator();
-      HashSet<Simbolo> set = new HashSet<Simbolo>();
+      HashSet<Simbolo<?>> set = new HashSet<Simbolo<?>>();
 
       // regras que deverao ser eliminadas
-      List<Regra> regrasVazia = new ArrayList<Regra>();
+      HashSet<Regra> regrasVazia = new HashSet<Regra>();
 
       // Ne = e
       // para cada simbolo no conjunto inicial Ne
 
-      Simbolo e = new Simbolo("e", true);
+      Simbolo<String> e = new Simbolo<String>("e", true); //tem q ser simbolo tanto terminal quanto nao terminal
       set.add(e);
+      int tamanhoAntigo = set.size();
+      int tamanhoAtual = set.size();
+      do { //Forma conjunto Ne: enquanto existe A->alpha com alpha pertencente ao conjunto A entra no conjunto.
+    	  tamanhoAntigo = set.size();
+    	  for(Regra atual : g.regras) { //Da uma volta a procura de elementos para serem adicionados, se possivel adiciona.
+    		  if(set.containsAll(atual.direita)) {
+    			  regrasVazia.add(atual);
+    			  set.add(atual.esquerda);
+    		  }
+    	  }
+    	  tamanhoAtual = set.size();
+      }while((tamanhoAtual - tamanhoAntigo) > 0); //se nenhum elemento foi adicionado, sai do laco.
 
       // enquanto existir uma regraIt A->alfa com alfa pertencente a Ne*
+      
+      /*
       while (regraIt.hasNext()) {
          Regra atual = (Regra) regraIt.next();
          if (atual.direita.size() == 1) {
@@ -83,6 +97,7 @@ public class Chomsky {
             }
          }
       }
+      */
 
       // feito o conjunto Ne
       // excluir de G todas as regras vazias
@@ -91,8 +106,27 @@ public class Chomsky {
       }
 
       List<Regra> novasRegras = new ArrayList<Regra>();
+      
       novasRegras = g.regras;
 
+      
+    
+      //Procura regras A->CB | A->BC onde B pertence a Ne e C nao (foi o q eu entendi)
+      for(Regra regra : novasRegras) { //Cria regras novas de acordo com o comentario acima e aiciona a novas regras.
+    	  if (regra.direita.size() == 2) { //regra com 2 caracteres...
+    		  if(set.contains(regra.direita.get(0)) ^ set.contains(regra.direita.get(1))) { //se apenas um dos 2 esta no conjunto
+    			  Regra nova = new Regra(regra.esquerda); //cria uma regra
+    			  Simbolo<?> s = (!set.contains(regra.direita.get(0))) ? regra.direita.get(0):regra.direita.get(1);
+    			  nova.addSimboloDireita(s); //adiciona o simbolo q nao esta no conjunto dos terminais a direita da regra.
+    			  g.addRegra(nova); //adiciona regra a gramatica.
+    		  }
+    	  }
+      }
+      
+      
+      
+      
+      /*
       // criamos A->C
       for (Regra regra : novasRegras) {
 
@@ -118,6 +152,27 @@ public class Chomsky {
             g.addRegra(novaRegra);
          } else {
          }
+      }
+      */
+   }
+   private static void eliminarRegrasCurtas(Gramatica g) {
+	 //parte 3, montando conjuntos D{X} = { B: X->*B } pra todo X pertencente a V
+      List<HashSet<Simbolo<?>>> conjuntosD = new ArrayList<HashSet<Simbolo<?>>>(); //Cria lista de conjuntos de simbolos.
+
+      for(int i = 0; i < g.simbNaoTerminais.size(); i++) { //Para cada simbolo nao terminal da gramatica:
+    	  //cria o grupo do nao terminal e adiciona na lista de conjuntos.
+    	  conjuntosD.add(new HashSet<Simbolo<?>>());
+    	  conjuntosD.get(i).add(g.simbNaoTerminais.get(i));
+    	  
+    	  int tamAntigo = conjuntosD.get(i).size();
+
+    	  do { //Algoritmo de fechamento.
+    		  tamAntigo = conjuntosD.get(i).size();
+    		  for(Regra regra : g.regras) { //laco nas regras
+    			  if (!conjuntosD.get(i).contains(regra.esquerda)) continue; //se o simbol oa esquerda nao estiver no conjunto, passa pula.
+    			  conjuntosD.get(i).addAll(regra.direita); //adiciona tudo do lado direito, como eh um hashset, so adiciona os q ainda nao estao no conjunto.
+    		  }
+    	  }while(conjuntosD.get(i).size() - tamAntigo > 0); //para quando o conjunto nao aumentar de tamanho.
       }
    }
 }

@@ -1,8 +1,18 @@
 package automatos;
 
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashSet;
 public class Main {
 	public static void main(String[] args) {
-		Gramatica g = new Gramatica();
+	
+	   boolean x,y;
+	   x = true;
+	   y = true;
+	   System.out.println(x ^ y);
+		
+		/*Gramatica g = new Gramatica();
 		
 		g.addSimboloAlfabeto("(");
 		g.addSimboloAlfabeto(")");
@@ -35,5 +45,9 @@ public class Main {
 		System.out.println("Gramática na forma normal de Chomsky:");
 		Chomsky.construirGramaticaChomsky(g);
 		System.out.println(g.toString());
+		*/
+		
+		
 	}
+	
 }
