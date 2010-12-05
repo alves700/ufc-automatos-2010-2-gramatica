@@ -130,5 +130,13 @@ public class Chomsky {
     		  }
     	  }while(conjuntosD.get(i).size() - tamAntigo > 0); //para quando o conjunto nao aumentar de tamanho.
       }
+      //Tirando as regras pequenas (tamanho == 1)
+      List<Regra> temp = new ArrayList<Regra>();
+      for(Regra r : g.regras) //marcando para remocao 
+    	  if(r.direita.size() == 1) temp.add(r);
+      for(Regra r : temp) //removendo regras marcadas da gramatica. 
+    	  g.regras.remove(r);
+      
+      
    }
 }
