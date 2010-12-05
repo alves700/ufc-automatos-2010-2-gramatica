@@ -12,7 +12,12 @@ public class Chomsky {
 
    public static void construirGramaticaChomsky(Gramatica g) {
       eliminarRegrasLongas(g);
+      System.out.println("******* GRAMATICA APOS PASSO 1: *******");
+      System.out.println(g.toString());
       eliminarRegraE(g);
+      System.out.println("******* GRAMATICA APOS PASSO 2: *******");
+      System.out.println(g.toString());
+      
       eliminarRegrasCurtas(g);
    }
 
@@ -127,7 +132,7 @@ public class Chomsky {
     		  tamAntigo = conjuntosD.get(i).size();
     		  for(Regra regra : g.regras) { //laco nas regras
     			  if (!conjuntosD.get(i).contains(regra.esquerda)) continue; //se o simbol oa esquerda nao estiver no conjunto, passa pula.
-    			  conjuntosD.get(i).addAll(regra.direita); //adiciona tudo do lado direito, como eh um hashset, so adiciona os q ainda nao estao no conjunto.
+    			 if(regra.direita.size() == 1) conjuntosD.get(i).addAll(regra.direita); //adiciona tudo do lado direito, como eh um hashset, so adiciona os q ainda nao estao no conjunto.
     		  }
     	  }while(conjuntosD.get(i).size() - tamAntigo > 0); //para quando o conjunto nao aumentar de tamanho.
       }
