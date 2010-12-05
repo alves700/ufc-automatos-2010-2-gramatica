@@ -13,6 +13,7 @@ public class Chomsky {
    public static void construirGramaticaChomsky(Gramatica g) {
       eliminarRegrasLongas(g);
       eliminarRegraE(g);
+      eliminarRegrasCurtas(g);
    }
 
    private static void eliminarRegrasLongas(Gramatica g) {
@@ -130,6 +131,9 @@ public class Chomsky {
     		  }
     	  }while(conjuntosD.get(i).size() - tamAntigo > 0); //para quando o conjunto nao aumentar de tamanho.
       }
+      System.out.println("LISTANDO CONJUNTOS:");
+      for(int i = 0; i < conjuntosD.size(); i++)
+    	  System.out.println(conjuntosD.get(i).toString());
       //Tirando as regras pequenas (tamanho == 1)
       List<Regra> temp = new ArrayList<Regra>();
       for(Regra r : g.regras) //marcando para remocao 
@@ -137,6 +141,56 @@ public class Chomsky {
       for(Regra r : temp) //removendo regras marcadas da gramatica. 
     	  g.regras.remove(r);
       
+      //ultima parte do passo 3....
+      temp.clear();
       
+      //A ignorancia abaixo foi feita por conta da forma de representacao dos simbolos terminais e n-terminais.
+      //Doeu... mais passou.
+      
+      for(Regra r:g.regras) { //pra cada regra
+    	  if(!r.direita.get(0).terminal) { //se o simbolo for um nao terminal
+    		  Integer index = (Integer) r.direita.get(0).valor; //pega o valor pra ser usado como indice =xx gambss
+    		  for(Simbolo<?> s : conjuntosD.get(index-1)) { //pra cada simbolo do seu conjunto D(S)
+    			  if(!r.direita.get(1).terminal) { //se o segundo simbolo for um nao terminal
+    				  Integer index2 = (Integer) r.direita.get(1).valor; //...
+    				  for(Simbolo<?> s2 : conjuntosD.get(index2-1)) { //laco nos seu conjunto D(S)
+    					  //cria regra e adiciona em temp.
+    					  Regra nova = new Regra(r.esquerda);
+    					  nova.addSimboloDireita(s);
+    					  nova.addSimboloDireita(s2);
+    					  if (!temp.contains(nova)) temp.add(nova);
+    				  }
+    			  }
+    			  else { //se o simbolo 2 for um terminal:
+					  Regra nova = new Regra(r.esquerda);
+					  nova.addSimboloDireita(s);
+					  nova.addSimboloDireita(r.direita.get(1));
+					  if (!temp.contains(nova)) temp.add(nova);
+    			  }
+    		  }
+    	  }
+    	  else { //se o simbolo 1 for um terminal
+   			  if(!r.direita.get(1).terminal) { //se o simbolo 2 nao for um terminal
+ 				  Integer index3 = (Integer) r.direita.get(1).valor;
+				  //System.out.println(conjuntosD.get(index3).toString());
+				  for(Simbolo<?> s3 : conjuntosD.get(index3-1)) {
+					  Regra nova = new Regra(r.esquerda);
+					  nova.addSimboloDireita(r.direita.get(0));
+					  nova.addSimboloDireita(s3);
+					  if (!temp.contains(nova))
+						  temp.add(nova);
+    	  }
+      }
+   			  else { //se simbolo 1 e simbolo 2 forem terminais...
+   				Regra nova = new Regra(r.esquerda);
+				  nova.addSimboloDireita(r.direita.get(0));
+				  nova.addSimboloDireita(r.direita.get(1));
+				  if (!temp.contains(nova))
+					  temp.add(nova);
+   			  }
+    	  }
+      }
+      //adicionando regras
+      for(Regra r : temp) if(!g.regras.contains(r)) g.addRegra(r);
    }
 }
