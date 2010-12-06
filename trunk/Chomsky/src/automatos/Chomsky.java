@@ -198,4 +198,28 @@ public class Chomsky {
       //adicionando regras
       for(Regra r : temp) if(!g.regras.contains(r)) g.addRegra(r);
    }
+   
+   private static boolean derivaPalavra(Gramatica g, ArrayList<Simbolo<?>> palavra) {
+	   //HashSet<Simbolo<?>>[][] N = new HashSet<Simbolo<?>>[palavra.size()][palavra.size()];
+	  // HashSet<Simbolo<?>>[][] M = new HashSet<Simbolo<?>>[10][10]();
+	   //ArrayList<HashSet<Simbolo<?>>> N = new ArrayList<HashSet<Simbolo<?>>>();
+	   ArrayList<ArrayList<HashSet<Simbolo<?>>>> N = new ArrayList<ArrayList<HashSet<Simbolo<?>>>>();
+	   for(int i = 0; i < palavra.size();i++){
+		   N.get(i).get(i).add(palavra.get(i));
+	   }
+
+	   for(int s = 0; s < palavra.size()-1;s++) {
+		   for(int i = 0; s < palavra.size()-s;i++) {
+			   for(int k = i; k < i+s-1;k++) {
+				   for(Regra r : g.regras) {
+					   if (N.get(i).get(k).contains(r.direita.get(0)) && N.get(k+1).get(i+s).contains(r.direita.get(1))) {
+						   N.get(i).get(i+s).add(r.esquerda);
+					   }
+				   }
+			   }
+		   }
+	   }
+	   
+	   return N.get(1).get(palavra.size()).contains(g.simbInicial);
+   }
 }
