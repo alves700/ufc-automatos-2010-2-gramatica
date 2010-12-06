@@ -219,18 +219,17 @@ public class Chomsky {
 		   N.get(i).get(i).add(palavra.get(i));
 	   }
 
-	   for(int s = 0; s < palavra.size()-1;s++) {
-		   for(int i = 0; s < palavra.size()-s;i++) {
-			   for(int k = i; k < i+s-1;k++) {
+	   for(int s = 0; s < palavra.size();s++) {
+		   for(int i = 0; i < palavra.size()-s;i++) {
+			   for(int k = i; k < i+s;k++) {
 				   for(Regra r : g.regras) {
-					   if (N.get(i).get(k).contains(r.direita.get(0)) && N.get(k+1).get(i+s).contains(r.direita.get(1))) {
+					   if (N.get(i).get(k).contains(r.direita.get(0)) && N.get(k+1).get(i+s).contains(r.direita.get(1)))
 						   N.get(i).get(i+s).add(r.esquerda);
-					   }
 				   }
 			   }
 		   }
 	   }
 	   
-	   return N.get(1).get(palavra.size()).contains(g.simbInicial);
+	   return N.get(0).get(palavra.size()-1).contains(g.simbInicial);
    }
 }

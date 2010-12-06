@@ -14,6 +14,7 @@ public class Main {
 		Simbolo<String> t2 = new Simbolo<String>(")", true);
 		w.add(t1);
 		w.add(t2);
+		w.add(t1);
 		
 		g.addSimboloAlfabeto("(");
 		g.addSimboloAlfabeto(")");
