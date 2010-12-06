@@ -9,6 +9,12 @@ public class Main {
 		
 		Gramatica g = new Gramatica();
 		
+		ArrayList<Simbolo<?>> w = new ArrayList<Simbolo<?>>();
+		Simbolo<String> t1 = new Simbolo<String>("(", true);
+		Simbolo<String> t2 = new Simbolo<String>(")", true);
+		w.add(t1);
+		w.add(t2);
+		
 		g.addSimboloAlfabeto("(");
 		g.addSimboloAlfabeto(")");
 
@@ -40,6 +46,8 @@ public class Main {
 		System.out.println("Gramática na forma normal de Chomsky:");
 		Chomsky.construirGramaticaChomsky(g);
 		System.out.println(g.toString());
+		
+		System.out.println("Palavra pertence a gramatica? " + Chomsky.derivaPalavra(g, w));
 		
 		
 		
