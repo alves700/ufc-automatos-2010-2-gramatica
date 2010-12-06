@@ -203,27 +203,34 @@ public class Chomsky {
 	   //HashSet<Simbolo<?>>[][] N = new HashSet<Simbolo<?>>[palavra.size()][palavra.size()];
 	  // HashSet<Simbolo<?>>[][] M = new HashSet<Simbolo<?>>[10][10]();
 	   //ArrayList<HashSet<Simbolo<?>>> N = new ArrayList<HashSet<Simbolo<?>>>();
-	   //ArrayList<ArrayList<HashSet<Simbolo<?>>>> N = new ArrayList<ArrayList<HashSet<Simbolo<?>>>>();
+	   ArrayList<ArrayList<HashSet<Simbolo<?>>>> N = new ArrayList<ArrayList<HashSet<Simbolo<?>>>>();
 	   //HashSet<Simbolo<?>>[] l = new HashSet<Simbolo<?>>[10]();
-	   @SuppressWarnings("unchecked")
-	   HashSet<Simbolo<?>>[][] N = new HashSet[palavra.size()][palavra.size()];
+	   //@SuppressWarnings("unchecked")
+	   //HashSet<Simbolo<?>>[][] N = new HashSet[palavra.size()][palavra.size()];
+	   for(int i = 0; i < palavra.size();i++) {
+		   N.add(new ArrayList<HashSet<Simbolo<?>>>());
+		   for(int j = 0; j < palavra.size(); j++) {
+			   N.get(i).add(new HashSet<Simbolo<?>>());
+		   }
+	   }
+	   
 	   
 	   for(int i = 0; i < palavra.size();i++){
-		   N[i][i].add(palavra.get(i));
+		   N.get(i).get(i).add(palavra.get(i));
 	   }
 
 	   for(int s = 0; s < palavra.size()-1;s++) {
 		   for(int i = 0; s < palavra.size()-s;i++) {
 			   for(int k = i; k < i+s-1;k++) {
 				   for(Regra r : g.regras) {
-					   if (N[i][k].contains(r.direita.get(0)) && N[k+1][i+s].contains(r.direita.get(1))) {
-						   N[i][i+s].add(r.esquerda);
+					   if (N.get(i).get(k).contains(r.direita.get(0)) && N.get(k+1).get(i+s).contains(r.direita.get(1))) {
+						   N.get(i).get(i+s).add(r.esquerda);
 					   }
 				   }
 			   }
 		   }
 	   }
 	   
-	   return N[1][palavra.size()].contains(g.simbInicial);
+	   return N.get(1).get(palavra.size()).contains(g.simbInicial);
    }
 }
