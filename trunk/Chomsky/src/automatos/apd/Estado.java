@@ -8,7 +8,18 @@ public class Estado {
 	public boolean isFinal;
 	public List<Transicao> transicoes = new ArrayList<Transicao>();
 	
+	public Estado(String label, boolean isFinal) {
+		super();
+		this.label = label;
+		this.isFinal = isFinal;
+	}
+
 	public void addTransicao(Transicao transicao) {
 		transicoes.add(transicao);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("<%s, Final: %s>", label, isFinal);
 	}
 }
