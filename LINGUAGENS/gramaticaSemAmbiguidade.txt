@@ -16,12 +16,14 @@ O->/F
 O->*F
 O->.
 ---Expressões---
-E-> F>F
-E-> F<F
-E-> F>=F
-E-> F<=F
-E-> F==F
-E-> F!=F
+E-> FE'
+E'-> >FE'
+E'-> <FE'
+E'-> >=FE'
+E'-> <=FE
+E'-> ==FE''
+E'-> !=FE'
+E'-> e
 ---Bloco Statements---
 S-> F S
 S-> I S

@@ -49,3 +49,7 @@ APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA
 36	(q,e,O),(q,/F)
 35	(q,e,O),(q,%)
 36	(q,e,O),(q,.)
+
+//Novas transições para o conjunto de operações(T34 a T39)
+34	(q,e,E),(q,FE')
+34	(q,e,E'),(q,>)
