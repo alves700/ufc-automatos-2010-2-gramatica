@@ -23,8 +23,8 @@ E-> F>=F
 E-> F<=F
 E-> F==F
 E-> F!=F
-E-> true
-E-> false
+
+
 ---Bloco Statements---
 S-> F next S'
 S-> I next S'
@@ -37,11 +37,8 @@ S'-> WF
 S'-> S 
 S-> e
 ---Bloco If----
-I-> if E then S IEE
+I-> if E then S IE
 I-> e
-IEE-> elseif E then S IE end
-IEE-> elseif E then S IEE end
-IEE-> IE
 IE-> else S end
 IE-> end
 ---Bloco While----
