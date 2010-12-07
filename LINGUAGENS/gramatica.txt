@@ -26,10 +26,10 @@ E-> F!=F
 E-> true
 E-> false
 ---Bloco Statements---
-S-> F S
-S-> I S
-S-> W S
-S-> WF S
+S-> F next S
+S-> I next S
+S-> W next S
+S-> WF next S
 S-> e
 ---Bloco If----
 I-> if E then S IEE
