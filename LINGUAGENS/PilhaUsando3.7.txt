@@ -1,11 +1,11 @@
 
 LSBR Language Stack Specification
 FALTA FAZER O RESTO!!!
-APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA O ABRAÇO!! :D
+APï¿½S FAZER ESSA PARTE ï¿½ Sï¿½ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA O ABRAï¿½O!! :D
 ----------------------------------------
-------Tirar transições ambiguas--------
-------Todos essa transições são ambiguas-----
-------Separado pelos espaços as transições ambiguas---------
+------Tirar transiï¿½ï¿½es ambiguas--------
+------Todos essa transiï¿½ï¿½es sï¿½o ambiguas-----
+------Separado pelos espaï¿½os as transiï¿½ï¿½es ambiguas---------
 26	(q,e,C),(q,start program S end)	
 27	(q,e,C),(q,e)	
 
@@ -23,10 +23,17 @@ APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA
 38	(q,e,E),(q,F==F)
 39	(q,e,E),(q,F!=F)
 
-40	(q,e,S),(q,F next S)
-41	(q,e,S),(q,I next S)
-42	(q,e,S),(q,W next S)
-43	(q,e,S),(q,WF next  S)
+40	(q,e,S),(q,F next S')
+41	(q,e,S),(q,I next S')
+42	(q,e,S),(q,W next S')
+43	(q,e,S),(q,WF next S')
+
+        (q,e,S'),(q, F)
+        (q,e,S'),(q, I)
+        (q,e,S'),(q, W)
+        (q,e,S'),(q, WF)
+        (q,e,S'),(q, S)
+
 44	(q,e,S),(q,e)
 
 45	(q,e,I),(q,if E then S IE)
@@ -40,8 +47,8 @@ APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA
 51	(q,e,W),(q,e)
 52	(q,e,W),(q,for(Id;E;Id=F) then S end)
 53	(q,e,W),(q,e)
-----------Para tirar essa ambiguidade precisamos modificar as transições existentes e adicionar novas transições-------
-//Novas transições para o conjunto de operações(T28 a T33)
+----------Para tirar essa ambiguidade precisamos modificar as transiï¿½ï¿½es existentes e adicionar novas transiï¿½ï¿½es-------
+//Novas transiï¿½ï¿½es para o conjunto de operaï¿½ï¿½es(T28 a T33)
 34	(q,e,F),(q,IdO)
 35	(q,e,O),(q,+F)
 36	(q,e,O),(q,-F)
@@ -50,4 +57,4 @@ APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA
 35	(q,e,O),(q,%)
 36	(q,e,O),(q,.)
 
-//Novas transições para o conjunto de operações(T34 a T39)
+//Novas transiï¿½ï¿½es para o conjunto de operaï¿½ï¿½es(T34 a T39)
