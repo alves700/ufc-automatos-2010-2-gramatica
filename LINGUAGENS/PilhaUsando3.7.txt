@@ -42,4 +42,11 @@ APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA
 ----------Para tirar essa ambiguidade precisamos modificar as transições existentes e adicionar novas transições-------
 ----------Vamos utilizar primeiramente a estratégia LookAhead($)-----------
 
-
+//Novas transições para o conjunto de operações(T28 a T33)
+34	(q,e,F),(q,IdO)
+35	(q,e,O),(q,+F)
+36	(q,e,O),(q,-F)
+35	(q,e,O),(q,*F)
+36	(q,e,O),(q,/F)
+35	(q,e,O),(q,%)
+36	(q,e,O),(q,.)
