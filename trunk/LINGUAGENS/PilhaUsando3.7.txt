@@ -34,5 +34,7 @@ LSBR Language Stack Specification
 -----------------LINHA 2 ALGORITMO-----------
 27	(q,a,e),(qa,e)  para todo a pertencente ao alfabeto U {$}
 ---------------LINHA 3-------------------
-52	(qa,e,a),(q,e) para todo a pertencente ao alfabeto U {$}
+52	(qa,e,a),(q,e) para todo a pertencente ao alfabeto 
 --------------LINHA 4----------------
+	(qa,e,S),(qa,S'S'') para todo a pertencente ao alfabeto U {$}
+--------------LINHA 5----------------
