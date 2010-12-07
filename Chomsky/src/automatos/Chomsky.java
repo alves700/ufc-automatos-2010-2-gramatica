@@ -200,13 +200,7 @@ public class Chomsky {
    }
    
    public static boolean derivaPalavra(Gramatica g, ArrayList<Simbolo<?>> palavra) {
-	   //HashSet<Simbolo<?>>[][] N = new HashSet<Simbolo<?>>[palavra.size()][palavra.size()];
-	  // HashSet<Simbolo<?>>[][] M = new HashSet<Simbolo<?>>[10][10]();
-	   //ArrayList<HashSet<Simbolo<?>>> N = new ArrayList<HashSet<Simbolo<?>>>();
 	   ArrayList<ArrayList<HashSet<Simbolo<?>>>> N = new ArrayList<ArrayList<HashSet<Simbolo<?>>>>();
-	   //HashSet<Simbolo<?>>[] l = new HashSet<Simbolo<?>>[10]();
-	   //@SuppressWarnings("unchecked")
-	   //HashSet<Simbolo<?>>[][] N = new HashSet[palavra.size()][palavra.size()];
 	   for(int i = 0; i < palavra.size();i++) {
 		   N.add(new ArrayList<HashSet<Simbolo<?>>>());
 		   for(int j = 0; j < palavra.size(); j++) {
