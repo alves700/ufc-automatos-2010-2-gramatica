@@ -15,7 +15,7 @@ public class Main {
 				new String[] {"0"}, new String[] {});
 		Transicao t4 = new Transicao("1", q3,
 				new String[] {"0"}, new String[] {});
-		Transicao t5 = new Transicao(null, null,
+		Transicao t5 = new Transicao(null, q4,
 				new String[] {"$"}, new String[] {});
 		
 		q1.addTransicao(t1);
@@ -28,6 +28,6 @@ public class Main {
 		apd.estadoInicial = q1;
 		apd.addEstado(q1, q2, q3, q4);
 		
-		System.out.println(apd.derivaString("000111"));
+		System.out.println(apd.derivaString("01"));
 	}
 }
