@@ -1,4 +1,4 @@
-
+﻿
 LSBR Language Stack Specification
 FALTA FAZER O RESTO!!!
 AP�S FAZER ESSA PARTE � S� FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA O ABRA�O!! :D
@@ -6,15 +6,7 @@ AP�S FAZER ESSA PARTE � S� FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRE
 ------Tirar transi��es ambiguas--------
 ------Todos essa transi��es s�o ambiguas-----
 ------Separado pelos espa�os as transi��es ambiguas---------
-26	(q,e,C),(q,start program S end)	
-27	(q,e,C),(q,e)	
-
-28	(q,e,F),(q,Id+F)
-29	(q,e,F),(q,Id-F)
-30	(q,e,F),(q,Id*F)
-31	(q,e,F),(q,Id/F)
-32	(q,e,F),(q,Id%F)
-33	(q,e,F),(q,Id.)
+	
 
 34	(q,e,E),(q,F>F)
 35	(q,e,E),(q,F<F)
@@ -23,38 +15,35 @@ AP�S FAZER ESSA PARTE � S� FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRE
 38	(q,e,E),(q,F==F)
 39	(q,e,E),(q,F!=F)
 
-40	(q,e,S),(q,F next S')
-41	(q,e,S),(q,I next S')
-42	(q,e,S),(q,W next S')
-43	(q,e,S),(q,WF next S')
 
-        (q,e,S'),(q, F)
-        (q,e,S'),(q, I)
-        (q,e,S'),(q, W)
-        (q,e,S'),(q, WF)
-        (q,e,S'),(q, S)
-
-44	(q,e,S),(q,e)
-
-45	(q,e,I),(q,if E then S IE)
-46	(q,e,I),(q,e)
-
-47	(q,e,IE),(q,elseif E then S IE end)
-48	(q,e,IE),(q,else S end)
-49	(q,e,IE),(q,end)
-
-50	(q,e,W),(q,while E then S end)
-51	(q,e,W),(q,e)
-52	(q,e,W),(q,for(Id;E;Id=F) then S end)
-53	(q,e,W),(q,e)
 ----------Para tirar essa ambiguidade precisamos modificar as transi��es existentes e adicionar novas transi��es-------
 //Novas transi��es para o conjunto de opera��es(T28 a T33)
-34	(q,e,F),(q,IdO)
-35	(q,e,O),(q,+F)
-36	(q,e,O),(q,-F)
-35	(q,e,O),(q,*F)
-36	(q,e,O),(q,/F)
-35	(q,e,O),(q,%)
-36	(q,e,O),(q,.)
 
-//Novas transi��es para o conjunto de opera��es(T34 a T39)
+1	(q,e,C),(q,start program S end)	
+2	(q,e,C),(q,e)
+3	(q,e,W),(q,while E then S end)
+4	(q,e,W),(q,e)
+5	(q,e,W),(q,for(Id;E;Id=F) then S end)
+6	(q,e,W),(q,e)
+7	(q,e,I),(q,if E then S IE)
+8	(q,e,I),(q,e)
+9	(q,e,IE),(q,else S end)
+10	(q,e,IE),(q,end)
+11	(q,e,F),(q,IdO)
+12	(q,e,O),(q,+F)
+13	(q,e,O),(q,-F)
+14	(q,e,O),(q,*F)
+15	(q,e,O),(q,/F)
+16	(q,e,O),(q,%)
+17	(q,e,O),(q,.)
+18	(q,e,S),(q,S'S'')
+19	(q,e,S'),(q,F)
+20	(q,e,S'),(q,I)
+21	(q,e,S'),(q,W)
+22	(q,e,S'),(q,WF)
+23	(q,e,S'),(q,S)
+24	(q,e,S'),(q,e)
+25	(q,e,S''),(q,nextS'S'')
+26	(q,e,S''),(q,e)
+
+
