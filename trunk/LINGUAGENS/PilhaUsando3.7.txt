@@ -3,21 +3,10 @@ LSBR Language Stack Specification
 FALTA FAZER O RESTO!!!
 AP�S FAZER ESSA PARTE � S� FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA O ABRA�O!! :D
 ----------------------------------------
-------Tirar transi��es ambiguas--------
-------Todos essa transi��es s�o ambiguas-----
-------Separado pelos espa�os as transi��es ambiguas---------
-	
-
-34	(q,e,E),(q,F>F)
-35	(q,e,E),(q,F<F)
-36	(q,e,E),(q,F>=F)
-37	(q,e,E),(q,F<=F)
-38	(q,e,E),(q,F==F)
-39	(q,e,E),(q,F!=F)
 
 
-----------Para tirar essa ambiguidade precisamos modificar as transi��es existentes e adicionar novas transi��es-------
-//Novas transi��es para o conjunto de opera��es(T28 a T33)
+-------Inicio--------
+0	(p,e,e),(q,C)
 
 1	(q,e,C),(q,start program S end)	
 2	(q,e,C),(q,e)
@@ -45,5 +34,53 @@ AP�S FAZER ESSA PARTE � S� FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRE
 24	(q,e,S'),(q,e)
 25	(q,e,S''),(q,nextS'S'')
 26	(q,e,S''),(q,e)
-
-
+27	(q,if,e),(qif,e)
+28	(q,then,e),(qthen,e)
+29	(q,else,e),(qelse,e)
+30	(q,end,e),(qend,e)
+31	(q,Id,e),(qId,e)
+32	(q,<,e),(q<,e)
+33	(q,>,e),(q>,e)
+34	(q,<=,e),(q<=,e)
+35	(q,>=,e),(q>=,e)
+36	(q,==,e),(q==,e)
+37	(q,!=,e),(q!=,e)
+38	(q,+,e),(q+,e)
+39	(q,*,e),(q*,e)
+40	(q,%,e),(q%,e)
+41	(q,/,e),(q/,e)
+42	(q,-,e),(q-,e)
+43	(q,.,e),(q.,e)	
+44	(q,while,e),(qwhile,e)
+45	(q,for,e),(qfor,e)
+46	(q,(,e),(q(,e)
+47	(q,),e),(q),e)
+48	(q,;,e),(q;,e)
+49	(q,program,e),(qprogram,e)
+50	(q,start,e),(qstart,e)
+51	(q,next,e),(qnext,e)
+52	(qif,e,if),(q,e)
+53	(qthen,e,then),(q,e)
+54	(qelse,e,else),(q,e)
+55	(qend,e,end),(q,e)
+56	(qId,e,Id),(q,e)
+57	(q<,e,<),(q,e)
+58	(q>,e,>),(q,e)
+59	(q<=,e,<=),(q,e)
+60	(q>=,e,>=),(q,e)
+61	(q==,e,==),(q,e)
+62	(q!=,e,!=),(q,e)
+63	(q+,e,+),(q,e)
+64	(q*,e,*),(q,e)
+65	(q%,e,%),(q,e)
+66	(q/,e,/),(q,e)
+67	(q-,e,-),(q,e)
+68	(q.,e,.),(q,e)	
+69	(qwhile,e,while),(q,e)
+70	(qfor,e,for),(q,e)
+71	(q(,e,(),(q,e)
+72	(q),e,)),(q,e)
+73	(q;,e,;),(q,e)
+74	(qprogram,e,program),(q,e)
+75	(qstart,e,start),(q,e)
+76	(qnext,e,next),(q,e)
