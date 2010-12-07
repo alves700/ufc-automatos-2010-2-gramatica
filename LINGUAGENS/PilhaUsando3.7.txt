@@ -1,13 +1,10 @@
 ﻿
 LSBR Language Stack Specification
-FALTA FAZER O RESTO!!!
-AP�S FAZER ESSA PARTE � S� FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA O ABRA�O!! :D
-----------------------------------------
-
 
 -------Inicio--------
 0	(p,e,e),(q,C)
 
+-----------LINHA 1 algoritmo página 166---------
 1	(q,e,C),(q,start program S end)	
 2	(q,e,C),(q,e)
 3	(q,e,W),(q,while E then S end)
@@ -34,6 +31,7 @@ AP�S FAZER ESSA PARTE � S� FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRE
 24	(q,e,S'),(q,e)
 25	(q,e,S''),(q,nextS'S'')
 26	(q,e,S''),(q,e)
+-----------------LINHA 2 ALGORITMO-----------
 27	(q,if,e),(qif,e)
 28	(q,then,e),(qthen,e)
 29	(q,else,e),(qelse,e)
@@ -59,6 +57,8 @@ AP�S FAZER ESSA PARTE � S� FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRE
 49	(q,program,e),(qprogram,e)
 50	(q,start,e),(qstart,e)
 51	(q,next,e),(qnext,e)
+51	(q,$,e),(q$,e)
+---------------LINHA 3-------------------
 52	(qif,e,if),(q,e)
 53	(qthen,e,then),(q,e)
 54	(qelse,e,else),(q,e)
@@ -84,3 +84,4 @@ AP�S FAZER ESSA PARTE � S� FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRE
 74	(qprogram,e,program),(q,e)
 75	(qstart,e,start),(q,e)
 76	(qnext,e,next),(q,e)
+--------------LINHA 4----------------
