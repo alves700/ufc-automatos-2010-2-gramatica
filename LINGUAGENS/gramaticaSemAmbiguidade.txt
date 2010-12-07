@@ -16,13 +16,14 @@ O->/F
 O->*F
 O->.
 ---Expressões---
-E-> FE'
-E'-> >FE'
-E'-> <FE'
-E'-> >=FE'
-E'-> <=FE
-E'-> ==FE'
-E'-> !=FE'
+
+E-> F>F
+E-> F<F
+E-> F>=F
+E-> F<=F
+E-> F==F
+E-> F!=F
+
 ---Bloco Statements---
 
 S-> S'S''
@@ -38,14 +39,12 @@ S'-> e
 
 
 ---Bloco If----
-I-> if E then S IEE
+
+I-> if E then S IE
 I-> e
-IEE-> elseif IEE'
-IEE'-> E then S IE end
-IEE'-> E then S IEE end
-IEE'-> IE
 IE-> else S end
 IE-> end
+
 ---Bloco While----
 W-> while E then S end
 W-> e
