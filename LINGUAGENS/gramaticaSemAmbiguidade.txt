@@ -24,6 +24,7 @@ E'-> <=FE
 E'-> ==FE'
 E'-> !=FE'
 ---Bloco Statements---
+
 S-> S'S''
 S''-> next S'S''   
 S'' -> e
@@ -33,7 +34,7 @@ S'-> I
 S'-> W
 S'-> WF
 S'-> S 
-S-> e
+S'-> e
 
 
 ---Bloco If----
