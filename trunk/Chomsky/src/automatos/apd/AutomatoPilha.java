@@ -2,7 +2,6 @@ package automatos.apd;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -52,15 +51,21 @@ public class AutomatoPilha {
 						}
 						Estado estadoAnterior = obterOuAdicionarEstado(automato, linhaMatcher.group(1));
 						String simbolo = linhaMatcher.group(2);
+						simbolo = simbolo.isEmpty() ? null : simbolo;
 						String[] topoPilhaEsperado = linhaMatcher.group(3).split(" ");
+						if (topoPilhaEsperado[0].isEmpty()) {
+							topoPilhaEsperado = new String[0];
+						}
 						Estado estadoDestino = obterOuAdicionarEstado(automato, linhaMatcher.group(4));
 						String[] adicionarTopoPilha = linhaMatcher.group(5).split(" ");
+						if (adicionarTopoPilha[0].isEmpty()) {
+							adicionarTopoPilha = new String[0];
+						}
 						estadoAnterior.addTransicao(new Transicao(simbolo, estadoDestino, topoPilhaEsperado, adicionarTopoPilha));
 						break;
 					}
 				}
 			}
-			automato = new AutomatoPilha();
 		} finally {
 			reader.close();
 		}
@@ -135,7 +140,7 @@ public class AutomatoPilha {
 	@Override
 	public String toString() {
 		String strEstados = "Estados: ";
-		String strEstadoInicial = "Estado inicial: " + estadoInicial.toString() + "\n";
+		String strEstadoInicial = "Estado inicial: " + estadoInicial.label + "\n";
 		String strEstadosFinais = "Estados finais: ";
 		
 		Collections.sort(estados);
@@ -143,20 +148,20 @@ public class AutomatoPilha {
 		while (estadosIt.hasNext()) {
 			Estado estado = (Estado) estadosIt.next();
 			if (estado.isFinal) {
-				strEstadosFinais += estado + " ";
+				strEstadosFinais += estado.label + " ";
 			} else {
-				strEstados += estado + " ";
+				strEstados += estado.label + " ";
 			}
 		}
 		strEstados += "\n";
 		strEstadosFinais += "\n";
 		
-		String strTransicoes = "Transições: ";
+		String strTransicoes = "Transições:\n";
 		estadosIt = estados.iterator();
 		while (estadosIt.hasNext()) {
 			Estado estado = (Estado) estadosIt.next();
 			for (Transicao transicao : estado.transicoes) {
-				strTransicoes += transicao + "\n";
+				strTransicoes += "\t" + transicao.toString(estado) + "\n";
 			}
 		}
 		return strEstados + strEstadoInicial + strEstadosFinais + strTransicoes;
