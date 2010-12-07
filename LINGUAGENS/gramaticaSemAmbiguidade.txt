@@ -24,11 +24,12 @@ E'-> <=FE
 E'-> ==FE'
 E'-> !=FE'
 ---Bloco Statements---
-S-> F S
-S-> I S
-S-> W S
-S-> WF S
-S-> e
+S-> SS'
+S'-> next F S'
+S'-> next I S'
+S'-> next W S'
+S'-> next WF S'
+S'-> e
 ---Bloco If----
 I-> if E then S IEE
 I-> e
@@ -36,6 +37,7 @@ IEE-> elseif IEE'
 IEE'-> E then S IE end
 IEE'-> E then S IEE end
 IEE'-> IE
+
 IE-> else S end
 IE-> end
 ---Bloco While----

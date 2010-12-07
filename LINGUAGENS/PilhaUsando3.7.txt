@@ -23,10 +23,10 @@ APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA
 38	(q,e,E),(q,F==F)
 39	(q,e,E),(q,F!=F)
 
-40	(q,e,S),(q,F S)
-41	(q,e,S),(q,I S)
-42	(q,e,S),(q,W S)
-43	(q,e,S),(q,WF S)
+40	(q,e,S),(q,F next S)
+41	(q,e,S),(q,I next S)
+42	(q,e,S),(q,W next S)
+43	(q,e,S),(q,WF next  S)
 44	(q,e,S),(q,e)
 
 45	(q,e,I),(q,if E then S IE)
@@ -51,5 +51,3 @@ APÓS FAZER ESSA PARTE É SÓ FAZER UM PROGRAMA PARA VER ESSAS REGRAS E CORRER PARA
 36	(q,e,O),(q,.)
 
 //Novas transições para o conjunto de operações(T34 a T39)
-34	(q,e,E),(q,FE')
-34	(q,e,E'),(q,>)
