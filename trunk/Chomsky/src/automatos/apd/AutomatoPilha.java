@@ -29,22 +29,29 @@ public class AutomatoPilha {
 			if (posicaoStr < string.length()) {
 				simboloAtual = Character.toString(string.charAt(posicaoStr));
 			}
-			Transicao transicao = procurarTransicao(estadoAtual.transicoes, simboloAtual, topoPilha);
-			if (transicao == null) {
-				topoPilha.add(pilha.pop());
-				continue;
-			} else {
-				topoPilha.clear();
-				for (int i = transicao.adicionarTopoPilha.size() - 1; i >=0; i--) {
-					pilha.push(transicao.adicionarTopoPilha.get(i));
-				}
-				if (simboloAtual.equals(transicao.simbolo)) {
-					posicaoStr++;
-				}
-				estadoAtual = transicao.estadoDestino;
-			}
-			if (posicaoStr == string.length() && estadoAtual.isFinal) {
+			if (simboloAtual == null && estadoAtual.isFinal) {
 				return true;
+			}
+			//Realiza desempilhamentos até encontrar uma transição:
+			Transicao transicao = null;
+			do {
+				transicao = procurarTransicao(estadoAtual.transicoes, simboloAtual, topoPilha);
+				if (transicao == null) {
+					if (pilha.isEmpty()) {
+						return false;
+					} else {
+						topoPilha.add(pilha.pop());
+					}
+				}
+			} while (transicao == null);
+			topoPilha.clear();
+			
+			for (int i = transicao.adicionarTopoPilha.size() - 1; i >=0; i--) {
+				pilha.push(transicao.adicionarTopoPilha.get(i));
+			}			
+			estadoAtual = transicao.estadoDestino;
+			if (transicao.simbolo != null) {
+				posicaoStr++;
 			}
 		} while (true);
 	}
