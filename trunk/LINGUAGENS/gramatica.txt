@@ -2,7 +2,7 @@ GRAMATICA FEITA COM OS ELEMENTOS ATUAIS
 
 Operadores nossos não funcionam com parênteses(até agora)
 
-V={elseif,C,if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,WF,program,start}
+V={IEE,elseif,C,if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,WF,program,start}
 terminais{true,false,elseif,if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while,for,(,),;,program,start}
 
 Regras:
@@ -32,9 +32,11 @@ S-> W S
 S-> WF S
 S-> e
 ---Bloco If----
-I-> if E then S IE
+I-> if E then S IEE
 I-> e
-IE-> elseif E then S IE end
+IEE-> elseif E then S IE end
+IEE-> elseif E then S IEE end
+IEE-> IE
 IE-> else S end
 IE-> end
 ---Bloco While----
