@@ -3,7 +3,7 @@ GRAMATICA FEITA COM OS ELEMENTOS ATUAIS
 Operadores nossos não funcionam com parênteses(até agora)
 
 V={elseif,C,if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,WF,program,start}
-terminais{elseif,if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while,for,(,),;,program,start}
+terminais{true,false,elseif,if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while,for,(,),;,program,start}
 
 Regras:
 ---Inicio----
@@ -23,6 +23,8 @@ E-> F>=F
 E-> F<=F
 E-> F==F
 E-> F!=F
+E-> true
+E-> false
 ---Bloco Statements---
 S-> F S
 S-> I S
