@@ -30,9 +30,12 @@ S-> W S
 S-> WF S
 S-> e
 ---Bloco If----
-I-> if E then S IE
+I-> if E then S IEE
 I-> e
-IE-> elseif E then S IE end
+IEE-> elseif IEE'
+IEE'-> E then S IE end
+IEE'-> E then S IEE end
+IEE'-> IE
 IE-> else S end
 IE-> end
 ---Bloco While----
