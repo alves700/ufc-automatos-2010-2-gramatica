@@ -52,3 +52,4 @@ LSBR Language Stack Specification
 	(qend,e,C),(qend,e)
 	(qend,e,C),(qend,e)
 	(qend,e,IE),(qend,e)
+	(qend,e,W),(qend,e) 
