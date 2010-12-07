@@ -62,6 +62,10 @@ public class Transicao {
 
 	@Override
 	public String toString() {
-		return String.format("%s (%s, %s, %s)", simbolo, estadoDestino.label, topoPilhaEsperado.toString(), adicionarTopoPilha.toString());
+		return String.format("%s(%s,%s,%s)", simbolo, estadoDestino.label, topoPilhaEsperado.toString(), adicionarTopoPilha.toString());
+	}
+	
+	public String toString(Estado estado) {
+		return String.format("(%s,%s),(%s,%s,%s)", simbolo, estadoDestino.label, topoPilhaEsperado.toString(), adicionarTopoPilha.toString());
 	}
 }
