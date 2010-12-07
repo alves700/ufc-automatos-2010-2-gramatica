@@ -9,7 +9,6 @@ LSBR Language Stack Specification
 2	(q,e,C),(q,e)
 3	(q,e,W),(q,while E then S end)
 4	(q,e,W),(q,e)
-5	(q,e,W),(q,for(Id;E;Id=F) then S end)
 6	(q,e,W),(q,e)
 7	(q,e,I),(q,if E then S IE)
 8	(q,e,I),(q,e)
@@ -38,3 +37,18 @@ LSBR Language Stack Specification
 --------------LINHA 4----------------
 	(qa,e,S),(qa,S'S'') para todo a pertencente ao alfabeto U {$}
 --------------LINHA 5----------------
+	(qnext,e,S),(qnext,next S'S'') 
+--------------LINHA 6----------------
+	
+--------------LINHA 12----------------
+	(qwhile,e,W),(qwhile,while E then S end)
+	(qthen,e,W),(qthen,then S end) 
+	(qif,e,I),(qif,if E then S IE) 
+	(qthen,e,I),(qthen,then S IE)
+	(qelse,e,IE),(qelse,else S end)  
+	(qstart,e,C),(qstart,start program S end)
+	(qprogram,e,C),(qprogram, program S end)
+--------------LINHA 13----------------
+	(qend,e,C),(qend,e)
+	(qend,e,C),(qend,e)
+	(qend,e,IE),(qend,e)

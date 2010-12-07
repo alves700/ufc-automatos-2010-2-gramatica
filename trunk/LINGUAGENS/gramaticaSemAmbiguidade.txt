@@ -63,6 +63,3 @@ IE-> end
 ---Bloco While----
 W-> while E then S end
 W-> e
---Bloco For----
-WF-> for(Id;E;Id=F) then S end
-WF-> e
