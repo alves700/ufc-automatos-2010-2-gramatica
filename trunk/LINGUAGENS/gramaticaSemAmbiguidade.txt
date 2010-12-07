@@ -23,7 +23,6 @@ E'-> >=FE'
 E'-> <=FE
 E'-> ==FE''
 E'-> !=FE'
-E'-> e
 ---Bloco Statements---
 S-> F S
 S-> I S
