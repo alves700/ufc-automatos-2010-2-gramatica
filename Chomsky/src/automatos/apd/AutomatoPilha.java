@@ -10,4 +10,9 @@ public class AutomatoPilha {
 	public void addEstado(Estado estado) {
 		estados.add(estado);
 	}
+	
+	public static AutomatoPilha carregarDeArquivo(String caminho) {
+		AutomatoPilha automato = new AutomatoPilha();
+		return automato;
+	}
 }
