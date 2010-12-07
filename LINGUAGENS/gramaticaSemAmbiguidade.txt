@@ -24,6 +24,21 @@ E-> F<=F
 E-> F==F
 E-> F!=F
 
+---- Parte nao deterministica:
+E-> F X
+
+X-> == F
+X-> != F
+
+X-> > X'
+X'-> F
+X'-> = F
+
+X-> < X''
+X''-> F
+X''-> = F
+
+
 ---Bloco Statements---
 
 S-> S'S''
