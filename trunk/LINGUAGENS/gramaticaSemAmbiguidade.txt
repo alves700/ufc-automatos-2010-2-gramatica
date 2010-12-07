@@ -1,0 +1,42 @@
+GRAMATICA FEITA COM OS ELEMENTOS ATUAIS
+
+V={E1,EI,O,elseif,C,if,then,else,end,Id,S,<,>,<=,>=,==,!=,+,*,%,/,-,F,E,.,I,IE,W,while,for,(,),;,WF,program,start}
+terminais{elseif,if,then,else,end,Id,<,>,<=,>=,==,!=,+,*,%,/,-,.,while,for,(,),;,program,start}
+
+Regras:
+---Inicio----
+C->start program S end
+C->e
+---Operações---
+F->id O
+O->+F
+O->-F
+O->%F
+O->/F
+O->*F
+O->.
+---Expressões---
+E-> F>F
+E-> F<F
+E-> F>=F
+E-> F<=F
+E-> F==F
+E-> F!=F
+---Bloco Statements---
+S-> F S
+S-> I S
+S-> W S
+S-> WF S
+S-> e
+---Bloco If----
+I-> if E then S IE
+I-> e
+IE-> elseif E then S IE end
+IE-> else S end
+IE-> end
+---Bloco While----
+W-> while E then S end
+W-> e
+--Bloco For----
+WF-> for(Id;E;Id=F) then S end
+WF-> e
