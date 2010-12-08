@@ -20,6 +20,7 @@ public class Automato {
 			regrasParaMudar = new ArrayList<Regra>();
 			for(int j = p+1; j < regrasTemp.size(); j++) {
 				if (regrasTemp.get(j).esquerda.valor != regrasTemp.get(p).esquerda.valor) continue;
+				if (regrasTemp.get(j).esquerda.equals(regrasTemp.get(j).direita.get(0))) continue; //Se for esq. recursiva, pula.
 				if (!regrasTemp.get(j).direita.get(0).equals(regrasTemp.get(p).direita.get(0))) continue;
 				regrasParaMudar.add(regrasTemp.get(j));
 			}
