@@ -1,0 +1,32 @@
+V={1 2 3 4 5 6 7 8 9 10}
+A={elseif if then else end id < > <= >= == != + * % / - . while for ( ) ; program start e next}
+G=2
+2->start program 3 end
+2->e
+4->id 1
+1->+ 4
+1->- 4
+1->% 4
+1->/ 4
+1->* 4
+1->.
+5->4 > 4
+5->4 < 4
+5->4 >= 4
+5->4 <= 4
+5->4 == 4
+5->4 != 4
+3->9 10
+10->next 9 10   
+10->e
+9->4
+9->6
+9->8
+9->3 
+9->e
+6->if 5 then 3 7
+6->e
+7->else 3 end
+7->end
+8->while 5 then 3 end
+8->e
