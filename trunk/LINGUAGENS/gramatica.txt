@@ -24,7 +24,6 @@ E-> F<=F
 E-> F==F
 E-> F!=F
 
-
 ---Bloco Statements---
 S-> F next S'
 S-> I next S'
