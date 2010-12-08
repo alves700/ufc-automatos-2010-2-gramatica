@@ -1,0 +1,56 @@
+G=(V,SIGMA,R,S)
+V= {C,C',C'',Q,E,O,V,N,S,ELSE,A,A',A'', (,),{,},while,if,else,x,y,0,1,2,3,4}
+SIGMA = {(,),{,},while,if,else,x,y,0,1,2,3,4,+,-,*,/,>,<,=,==,!=,&&,||,;}
+
+----- CONDICIONAL -----
+C-> (W
+C'-> E Q E)
+C'-> C C''
+C''-> && C)
+C''-> || C)
+
+
+Q-> ==
+Q-> !=
+Q-> >
+Q-> <
+
+------- Expressao--------
+E-> (E O E)
+E-> N
+E-> V
+O-> +
+O-> -
+O-> *
+O-> /
+
+-------- Numeros -------
+V-> x
+V-> y
+
+N-> 0
+N-> 1
+N-> 2
+N-> 3
+N-> 4
+
+--------- Statements ------
+
+S-> if C { S } ELSE
+ELSE-> else { S }
+ELSE-> e
+S-> A;
+S-> S S
+S-> while C { S }
+
+
+---------ATRIBUICAO---------
+A-> VA'
+A'-> ++
+A'-> =A''
+A''-> N
+A''-> V
+
+
+
+ 
