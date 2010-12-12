@@ -23,29 +23,30 @@ public class AutomatoPilha {
 	public static AutomatoPilha carregarDeArquivo(String caminho) throws Exception {
 		AutomatoPilha automato = new AutomatoPilha();
 		BufferedReader reader = null;
-		Pattern transitionPattern = Pattern.compile("\\(([^,]*),([^,]*),([^,]*)\\),\\(([^,]*),([^,]*)\\)");
+		Pattern transitionPattern = Pattern.compile("\\(([^?]+)\\?([^?]*)\\?([^?]*)\\)\\(([^?]+)\\?([^?]*)\\)");
 		
 		try {
 			reader = new BufferedReader(new FileReader(caminho));
-			EstadoLeitura estadoLeitura = EstadoLeitura.ESTADO_INICIAL;
+			SecaoLeitura secaoLeitura = SecaoLeitura.SECAO_ESTADO_INICIAL;
 			String linha = null;
 			while ((linha = reader.readLine()) != null) {
-				EstadoLeitura proxEstadoLeitura = EstadoLeitura.getByIdentificador(linha);
-				if (proxEstadoLeitura != null) {
-					estadoLeitura = proxEstadoLeitura;
+				linha = linha.replaceAll(" ", "");
+				SecaoLeitura proxSecaoLeitura = SecaoLeitura.getByIdentificador(linha);
+				if (proxSecaoLeitura != null) {
+					secaoLeitura = proxSecaoLeitura;
 				} else {
-					switch (estadoLeitura) {
-					case ESTADO_INICIAL:
+					switch (secaoLeitura) {
+					case SECAO_ESTADO_INICIAL:
 						Estado estadoInicial = new Estado(linha.trim(), false);
 						automato.estadoInicial = estadoInicial;
 						automato.estados.add(estadoInicial);
 						break;
-					case ESTADOS_FINAIS:
+					case SECAO_ESTADOS_FINAIS:
 						Estado estadoFinal = obterOuAdicionarEstado(automato, linha);
 						estadoFinal.isFinal = true;
 						break;
-					case TRANSICOES:
-						Matcher linhaMatcher = transitionPattern.matcher(linha.replaceAll("  ", " "));
+					case SECAO_TRANSICOES:
+						Matcher linhaMatcher = transitionPattern.matcher(linha);
 						if (!linhaMatcher.matches()) {
 							throw new Exception();
 						}
@@ -167,18 +168,18 @@ public class AutomatoPilha {
 		return strEstados + strEstadoInicial + strEstadosFinais + strTransicoes;
 	}
 
-	private static enum EstadoLeitura {
-		ESTADO_INICIAL("#estado_inicial"),
-		ESTADOS_FINAIS("#estados_finais"),
-		TRANSICOES("#transicoes");
+	private static enum SecaoLeitura {
+		SECAO_ESTADO_INICIAL("#estado_inicial"),
+		SECAO_ESTADOS_FINAIS("#estados_finais"),
+		SECAO_TRANSICOES("#transicoes");
 		
 		public final String identificador;
-		EstadoLeitura(String identificador) {
+		SecaoLeitura(String identificador) {
 			this.identificador = identificador;
 		}
 		
-		public static EstadoLeitura getByIdentificador(String identificador) {
-			for (EstadoLeitura estado : values()) {
+		public static SecaoLeitura getByIdentificador(String identificador) {
+			for (SecaoLeitura estado : values()) {
 				if (identificador.equals(estado.identificador)) {
 					return estado;
 				}
