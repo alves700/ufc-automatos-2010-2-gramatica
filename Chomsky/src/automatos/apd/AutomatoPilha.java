@@ -123,6 +123,7 @@ public class AutomatoPilha {
 	
 	public Transicao procurarTransicao(List<Transicao> transicoes, String simbolo, List<String> topoPilha) {
 		//TODO RETIRAR VERIFICACAO DE UMBIGUIDADE!!!
+		//TODO LOOOOOOOOOOKAHEAD(1)!!!!!!
 		Transicao transicaoEncontrada = null;
 		for (Transicao transicao : transicoes) {
 			if (transicao.simbolo != null && !transicao.simbolo.equals(simbolo)) {
