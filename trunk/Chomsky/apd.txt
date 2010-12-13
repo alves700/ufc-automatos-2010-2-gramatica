@@ -1,16 +1,15 @@
 #simbolos_nao_terminais
 SG ATR FUN FUNCALL PARAMS PARAMVALS EXPBOOL OPBOOL BOOLRESULT OPCOMPAR EXPARIT OPARIT IF ELSE WHILE SB ID VAR VAL SINAL
 #simbolos_terminais
-; = function : \( \) \{ \} , (&){1,2}|(\|){1,2}|)\^) true false ((<)|(>)|(<=)|(>=)|(!=)(==)) ((\*)|(/)|(%)|(\+)|(-)) if else while [a-zA-Z]+ [0-9]+ "[a-zA-Z0-9 ]*" - $
+; = function : \( \) \{ \} , ((&){1,2}|(\|){1,2}|(\^)) true false ((<)|(>)|(<=)|(>=)|(!=)(==)) ((\*)|(/)|(%)|(\+)|(-)) if else while [a-zA-Z]+ [0-9]+ "[a-zA-Z0-9\s]*" - $
 #estado_inicial
 qINICIO
 #estados_finais
 qFIM
 #transicoes
 // ESTADO: INICIANDO PROGRAMA
-0.((qINICIO ? ? )(qSG ? SG $)) //INICIO DE PROGRAMA :p
+0.(qINICIO ? ? )(qSG ? SG $)
 
-//ESTADO CONTROLADOR
 1.(qFORWARD ? ? SG)(qSG ? )
 1.(qFORWARD ? ? FUN)(qFUN ? )
 1.(qFORWARD ? ? ATR)(qATR ? )
@@ -30,56 +29,56 @@ qFIM
 1.(qFORWARD ? ? OPCOMPAR)(qOPCOMPAR ? )
 
 // ESTADO: LENDO SG (SENTENCA GLOBAL)
-2.(qSG ?   ? SG)(qFUN ? FUN SG SG1) //Vai para a leitura de um FUN. SG SG1 na pilha serve para voltar para o SG já lido o FUN.
-2.(qSG ?   ? SG)(qATR ? ATR SG SG1) //Vai para a leitura de um ATR. SG SG1 na pilha serve para voltar para o SG já lido o ATR.
-2.(qSG ? ; ? SG1)(qSG ? SG) //Leu um FUN e o separador (;), e retorna para ler um SG novamente.
-2.(qSG ?   ? $)(qFIM ? ) //FIM DE PROGRAMA :p
+2.(qSG ? ? SG)(qFUN ? FUN SG SG1)
+2.(qSG ? ? SG)(qATR ? ATR SG SG1)
+2.(qSG ? ; ? SG1)(qSG ? SG)
+2.(qSG ? ? $)(qFIM ? )
 
 // ESTADO: LENDO DECLARACAO DE FUNCAO
-3.(qFUN ? function ? FUN)(qFUN ? FUN2) //Leu o 'function'. Coloca FUN2 para sinalizar qFUN q o 'function' já foi lido.
-3.(qFUN ? : ? FUN2)(qID ? : ID FUN ID) //Dps da lida do 'function', lê o ':' e vai ler o ID da função. FUN ID na pilha serve pra voltar pra FUN já lido o ID.
-3.(qFUN ? \( ? ID)(qID ? ID FUN PARAMS) //Voltou da lida do ID da função, leu o '(' e vai ler PARAMS. FUN PARAMS na pilha serve pra voltar pra FUN já lido o PARAMS.
-3.(qFUN ? \) ? PARAMS)(qFUN ? FUN3) //Voltou da lida do PARAMS, leu o ')' e vai ler o corpo. FUN3 na pilha sinalizar q o ')' já foi lido
-3.(qFUN ? {\ ? FUN3)(qSB ? SB FUN SB) //Dps da lida do ')', leu o '{' e vai ler o corpo. FUN SB na pilha serve pra voltar pra FUN já lido PARAMS.
-3.(qFUN ? \} ? SB)(qFORWARD ? ) //Voltou da lida do SB, leu o '}' e vai para o qFORWARD.
+3.(qFUN ? function ? FUN)(qFUN ? FUN2)
+3.(qFUN ? : ? FUN2)(qID ? : ID FUN ID)
+3.(qFUN ? \( ? ID)(qPARAMS ? PARAMS FUN PARAMS)
+3.(qFUN ? \) ? PARAMS)(qFUN ? FUN3)
+3.(qFUN ? {\ ? FUN3)(qSB ? SB FUN SB)
+3.(qFUN ? \} ? SB)(qFORWARD ? )
 
 // ESTADO: LENDO ATRIBUICAO
-4.(qATR ? ? ATR)(qVAR ? VAR ATR VAR) //Vai para a leitura de variavel. ATR VAR na pilha serve pra voltar pra ATR já lido o VAR.
-4.(qATR ? = ? VAR)(qVAL ? VAL) //Voltou da leitura do VAR, leu o '=' e vai pra leitura do VAL.
+4.(qATR ? ? ATR)(qVAR ? VAR ATR VAR)
+4.(qATR ? = ? VAR)(qVAL ? VAL)
 
 // ESTADO: LENDO DECLARACAO DE PARAMETROS
-5.(qPARAMS ? ? PARAMS)(qVAR ? VAR PARAMS VAR) //Vai para a leitura de VAR. PARAMS VAR na pilha serve pra voltar pra PARAMS já lido o VAR.
-5.(qPARAMS ? , ? VAR)(qPARAMS ? ) //Voltou da leitura de um VAR, leu o ',' e vai pra leitura de mais PARAMS.
-5.(qPARAMS ? ? VAR)(qFORWARD ? ) //Voltou da leitura do VAR e, como não tem ',', vai pro CONTROL.
+5.(qPARAMS ? ? PARAMS)(qVAR ? VAR PARAMS VAR)
+5.(qPARAMS ? , ? VAR)(qPARAMS ? )
+5.(qPARAMS ? ? VAR)(qFORWARD ? )
 
 // ESTADO: LENDO DECLARACAO DE PARAMETROS
-6.(qPARAMVALS ? ? PARAMVALS)(qVAL ? VAL PARAMVALS VAL) //Vai para a leitura de VAL. PARAMVALS VAL na pilha serve pra voltar pra PARAMVALS já lido o VAR.
-6.(qPARAMVALS ? , ? VAL)(qPARAMVALS ? ) //Voltou da leitura de um VAL, leu o ',' e vai pra leitura de mais PARAMVALS.
-6.(qPARAMVALS ? ? VAL)(qFORWARD ? ) //Voltou da leitura de um VAL e, como não tem ',', vai pro CONTROL.
+6.(qPARAMVALS ? ? PARAMVALS)(qVAL ? VAL PARAMVALS VAL)
+6.(qPARAMVALS ? , ? VAL)(qPARAMVALS ? )
+6.(qPARAMVALS ? ? VAL)(qFORWARD ? )
 
 // ESTADO: LENDO UM EXPBOOL
-7.(qEXPBOOL ?  ? EXPBOOL)(qBOOLRESULT ? BOOLRESULT EXPBOOL BOOLRESULT)
-7.(qEXPBOOL ?  ? BOOLRESULT)(qOPBOOL ? OPBOOL EXPBOOL EXPBOOL)
-7.(qEXPBOOL ?  ? BOOLRESULT)(qFORWARD ? )
+7.(qEXPBOOL ? ? EXPBOOL)(qBOOLRESULT ? BOOLRESULT EXPBOOL BOOLRESULT)
+7.(qEXPBOOL ? ? BOOLRESULT)(qOPBOOL ? OPBOOL EXPBOOL EXPBOOL)
+7.(qEXPBOOL ? ? BOOLRESULT)(qFORWARD ? )
 
 7.(qOPBOOL ? ((&){1,2}|(\|){1,2}|)\^)) ? OPBOOL )(qFORWARD ? )
 
 7.(qBOOLRESULT ? true ? BOOLRESULT)(qFORWARD ? )
 7.(qBOOLRESULT ? false ? BOOLRESULT)(qFORWARD ? )
-7.(qBOOLRESULT ?  ? BOOLRESULT)(qVAL ? VAL BOOLRESULT VAL)
-7.(qBOOLRESULT ?  ? VAL)(qOPCOMPAR ? OPCOMPAR BOOLRESULT OPCOMPAR)
-7.(qBOOLRESULT ?  ? OPCOMPAR)(qFORWARD ? )
+7.(qBOOLRESULT ? ? BOOLRESULT)(qVAL ? VAL BOOLRESULT VAL)
+7.(qBOOLRESULT ? ? VAL)(qOPCOMPAR ? OPCOMPAR BOOLRESULT OPCOMPAR)
+7.(qBOOLRESULT ? ? OPCOMPAR)(qFORWARD ? )
 
 7.(qOPCOMPAR ? ((<)|(>)|(<=)|(>=)|(!=)(==)) ? OPCOMPAR)(qFORWARD ? )
 
 //ESTADO: LENDO UM BLOCO DE SELEÇÃO IF
-8.(qIF ? if ? IF)(qIF ? IF2) //Leu 'if'
-8.(qIF ? \( ? IF2)(qEXPBOOL ? EXPBOOL IF EXPBOOL) //Leu '(' Vai ler EXPBOOL
-8.(qIF ? \) ? EXPBOOL)(qIF ? IF3) //Leu ')'
-8.(qIF ? \{ ? IF3)(qSB ? SB IF SB) //Leu '{'. Vai ler SB
-8.(qIF ? \} ? SB)(qELSE ? ELSE) //Leu '}'. Vai ler ELSE
+8.(qIF ? if ? IF)(qIF ? IF2)
+8.(qIF ? \( ? IF2)(qEXPBOOL ? EXPBOOL IF EXPBOOL)
+8.(qIF ? \) ? EXPBOOL)(qIF ? IF3)
+8.(qIF ? \{ ? IF3)(qSB ? SB IF SB)
+8.(qIF ? \} ? SB)(qELSE ? ELSE)
 
-8.(qELSE ?  ? ELSE)(qFORWARD ? )
+8.(qELSE ? ? ELSE)(qFORWARD ? )
 8.(qELSE ? else ? ELSE)(qELSE ? ELSE2)
 8.(qELSE ? \{ ? ELSE2)(qSB ? SB ELSE SB)
 8.(qELSE ? \} ? ELSE)(qFORWARD ? )
@@ -93,10 +92,10 @@ qFIM
 
 //ESTADO: SENTENÇA DE BLOCO
 
-10.((qSB ?   ? SB)(qWHILE ? WHILE SB SB1))
-10.((qSB ?   ? SB)(qATR ? ATR SB SB1))
+10.((qSB ? ? SB)(qWHILE ? WHILE SB SB1))
+10.((qSB ? ? SB)(qATR ? ATR SB SB1))
 10.((qSB ? ; ? SB1)(qSB ? SB))
-10.((qSB ?   ? SB)(qFORWARD ? ))//TO PERDIDO AQUi
+10.((qSB ? ? SB)(qFORWARD ? ))
 
 // ESTADO: LENDO UM ID
 14.(qID ? [a-zA-Z]+ ? ID)(qFORWARD ? )
