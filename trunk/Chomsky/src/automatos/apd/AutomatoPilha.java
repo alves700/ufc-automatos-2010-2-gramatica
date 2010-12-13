@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -15,6 +17,7 @@ public class AutomatoPilha {
 	public List<String> simbTerminais = new ArrayList<String>();
 	public List<Estado> estados = new ArrayList<Estado>();
 	public Estado estadoInicial;
+	int profundidade;
 	
 	public void addEstados(Estado... estados) {
 		for (Estado e : estados) {
@@ -154,20 +157,39 @@ public class AutomatoPilha {
 	public Transicao procurarTransicao(List<Transicao> transicoes, String simbolo, List<String> topoPilha, String proxSimbolo) {
 		//TODO FAZER O LOOOOOOOOOOKAHEAD(1) VERIFICANDO O PRIMEIRO NAO TERMINAL QUE A NOVA TRANSICAO ADICIONA NA PILHA!!!!!!
 		Transicao transicaoEncontrada = null;
+		int counter = 0; //adicao do counter pra poder ver se realmente ha uma ambiguidade.
 		for (Transicao transicao : transicoes) {
-			if (transicao.simbolo != null && !transicao.simbolo.equals(simbolo)) {
+			if (transicao.simbolo != null && !simbolo.matches(transicao.simbolo)) {
 				continue;
 			}
 			if (transicao.topoPilhaEsperado.isEmpty() || transicao.topoPilhaEsperado.equals(topoPilha)) {
-				if (transicaoEncontrada != null) {
-					throw new RuntimeException("Ambiguidade!");
-				}
 				transicaoEncontrada = transicao;
+				counter++;
 			}
 		}
+		if (counter > 1) return Lookahead(transicoes,simbolo,topoPilha,proxSimbolo);
 		return transicaoEncontrada;
 	}
 
+	public Transicao Lookahead(List<Transicao> transicoes, String simbolo, List<String> topoPilha, String proxSimbolo) {
+	Transicao r = null;
+	profundidade = simbNaoTerminais.size();
+	for(Transicao t: transicoes) {
+		if (lookAheadRecursao(t, simbolo, topoPilha, proxSimbolo, 0)) { r = t; break; }
+	}
+	return r;
+	}
+	
+	public boolean lookAheadRecursao(Transicao t, String simbolo, List<String> topoPilha, String proxSimbolo, int prof) {
+		boolean axou = false;
+		if ((t.simbolo == null || simbolo.matches(t.simbolo)) && t.topoPilhaEsperado.equals(topoPilha)) return true;
+		if (prof > profundidade) return false;
+		for(Transicao tt : t.estadoDestino.transicoes) { //para cada transicao do estado alvo...
+			//if(!tt.simbolo.matches(proxSimbolo)) continue; //se o simbolo da transacao nao for o proximoSimbolo nao chama recursa.
+			if (lookAheadRecursao(tt, proxSimbolo, t.adicionarTopoPilha, proxSimbolo,prof+1)) { axou = true; break; } //se encontro um para o loop q chama a recursao.
+		}
+		return axou;
+	}
 	@Override
 	public String toString() {
 		String strEstados = "Estados: ";
