@@ -200,7 +200,7 @@ public class AutomatoPilha {
 		if (simbolo.matches(t.simbolo) && t.topoPilhaEsperado.equals(topoPilha.get(0))) return true;
 		if (prof > profundidade) return false;
 		for(Transicao tt : t.estadoDestino.transicoes) { //para cada transicao do estado alvo...
-			if(tt.simbolo.matches(proxSimbolo) && tt.simbolo != null) continue; //se o simbolo da transacao nao for o proximoSimbolo nao chama recursao.
+			if(!tt.simbolo.matches(proxSimbolo) && tt.simbolo != null) continue; //se o simbolo da transacao nao for o proximoSimbolo nao chama recursao.
 			if (lookAheadRecursao(tt, proxSimbolo, t.adicionarTopoPilha , proxSimbolo,prof+1)) { axou = true; break; } //se encontro um para o loop q chama a recursao.
 		}
 		return axou;
