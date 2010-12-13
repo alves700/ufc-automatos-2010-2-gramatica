@@ -2,6 +2,7 @@ package automatos.apd;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
 	public static void main(String[] args) {
@@ -37,14 +38,26 @@ public class Main {
 			AutomatoPilha apd = AutomatoPilha.carregarDeArquivo("apd.txt");
 			System.out.println("APD:");
 			System.out.println(apd);
-			String string = new BufferedReader(new FileReader("string.txt"))
-					.readLine();
+			
+			String string = lerStringTeste("string.txt");
+			
 			System.out.println("Teste com a string:\n" + string + "\n");
 			System.out.print("O APD deriva a string? "
-					+ apd.derivaString("000111"));
+					+ apd.derivaString(string));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private static String lerStringTeste(String caminho) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(caminho));
+		StringBuilder strBuilder = new StringBuilder();
+		String linha;
+		while ((linha = reader.readLine()) != null) {
+			strBuilder.append(linha);
+		}
+		reader.close();
+		return strBuilder.toString();
 	}
 }
