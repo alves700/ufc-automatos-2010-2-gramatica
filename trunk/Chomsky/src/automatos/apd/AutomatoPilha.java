@@ -199,23 +199,32 @@ public class AutomatoPilha {
 	}
 	return r;
 	}
-	
+
 	public boolean lookAheadRecursao(Transicao t, String simbolo, Stack<String> pilha, String proxSimbolo, int prof) {
 		boolean axou = false;
 		Stack<String> p = new Stack<String>();
-		if ((t.simbolo != null && simbolo.matches(t.simbolo)) && t.topoPilhaEsperado.equals(pilha.peek()) && prof > 0) return true;
-		if (prof > profundidade) return false;
-		for(Transicao tt : t.estadoDestino.transicoes) { //para cada transicao do estado alvo...
-			if(tt.simbolo != null && !proxSimbolo.matches(tt.simbolo)) continue; //se o simbolo da transacao nao for o proximoSimbolo nao chama recursao.
-			if(!tt.topoPilhaEsperado.equals(pilha.peek())) continue; //se a pilha nao for o esperado, elimina transicao.
+		if ((t.simbolo != null && simbolo.matches(t.simbolo)) && t.topoPilhaEsperado.equals(pilha.peek()) && prof > 0)
+			return true;
+		if (prof > profundidade)
+			return false;
+		for (Transicao tt : t.estadoDestino.transicoes) { // para cada transicao do estado alvo...
+			if (tt.simbolo != null && !proxSimbolo.matches(tt.simbolo))
+				continue; // se o simbolo da transacao nao for o proximoSimbolo nao chama recursao.
+			if (!tt.topoPilhaEsperado.equals(pilha.peek()))
+				continue; // se a pilha nao for o esperado, elimina transicao.
 			p = pilha;
 			p.pop();
-			for(int i = t.adicionarTopoPilha.size(); i > 0; --i) p.push(t.adicionarTopoPilha.get(i));
-			
-			if (lookAheadRecursao(tt, proxSimbolo, p , proxSimbolo,prof+1)) { axou = true; break; } //se encontro um para o loop q chama a recursao.
+			for (int i = t.adicionarTopoPilha.size(); i > 0; --i)
+				p.push(t.adicionarTopoPilha.get(i));
+
+			if (lookAheadRecursao(tt, proxSimbolo, p, proxSimbolo, prof + 1)) {
+				axou = true;
+				break;
+			} // se encontro um para o loop q chama a recursao.
 		}
 		return axou;
 	}
+	
 	@Override
 	public String toString() {
 		String strEstados = "Estados: ";
