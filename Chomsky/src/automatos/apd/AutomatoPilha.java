@@ -192,12 +192,15 @@ public class AutomatoPilha {
 	}
 
 	public Transicao Lookahead(List<Transicao> transicoes, String simbolo, Stack<String> pilha, String proxSimbolo) {
-	Transicao r = null;
-	profundidade = simbNaoTerminais.size();
-	for(Transicao t: transicoes) {
-		if (lookAheadRecursao(t, simbolo, pilha, proxSimbolo, 0)) { r = t; break; } //manda desse jeito pra dar erro no primero teste e comecar a busca...
-	}
-	return r;
+		Transicao r = null;
+		profundidade = simbNaoTerminais.size();
+		for (Transicao t : transicoes) {
+			if (lookAheadRecursao(t, simbolo, pilha, proxSimbolo, 0)) {
+				r = t;
+				break;
+			} // manda desse jeito pra dar erro no primero teste e comecar a busca...
+		}
+		return r;
 	}
 
 	public boolean lookAheadRecursao(Transicao t, String simbolo, Stack<String> pilha, String proxSimbolo, int prof) {
