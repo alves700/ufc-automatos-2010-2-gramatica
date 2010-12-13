@@ -11,12 +11,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AutomatoPilha {
+	public List<String> simbNaoTerminais = new ArrayList<String>();
+	public List<String> simbTerminais = new ArrayList<String>();
 	public List<Estado> estados = new ArrayList<Estado>();
 	public Estado estadoInicial;
 	
-	public void addEstado(Estado... estado) {
-		for (Estado e : estado) {
-			estados.add(e);
+	public void addEstados(Estado... estados) {
+		for (Estado e : estados) {
+			this.estados.add(e);
+		}
+	}
+	
+	public void addSimbNaoTerminais(String... simbNaoTerminais) {
+		for (String s : simbNaoTerminais) {
+			this.simbNaoTerminais.add(s);
+		}
+	}
+	
+	public void addSimbTerminais(String... simbTerminais) {
+		for (String s : simbTerminais) {
+			this.simbTerminais.add(s);
 		}
 	}
 	
@@ -36,6 +50,12 @@ public class AutomatoPilha {
 					secaoLeitura = proxSecaoLeitura;
 				} else {
 					switch (secaoLeitura) {
+					case SECAO_SIMBOLOS_NAO_TERMINAIS:
+						automato.addSimbNaoTerminais(linha.split(" "));
+						break;
+					case SECAO_SIMBOLOS_TERMINAIS:
+						automato.addSimbTerminais(linha.split(" "));
+						break;
 					case SECAO_ESTADO_INICIAL:
 						Estado estadoInicial = new Estado(linha.trim(), false);
 						automato.estadoInicial = estadoInicial;
@@ -47,9 +67,9 @@ public class AutomatoPilha {
 						break;
 					case SECAO_TRANSICOES:
 						if (linha.indexOf("//") != -1) {
-							linha = linha.substring(0, linha.indexOf("//")); //Remove comentário da transição
+							linha = linha.substring(0, linha.indexOf("//")); //Remove comentario da transicao
 						}
-						linha = linha.replaceAll(" ", "");
+						linha = linha.replaceAll(" ", ""); //Remove espacos
 						if (linha.indexOf("(") == -1 || linha.isEmpty()) {
 							continue;
 						}
@@ -86,7 +106,7 @@ public class AutomatoPilha {
 		int indiceEstadoExistente = automato.estados.indexOf(new Estado(label, false));
 		if (indiceEstadoExistente == -1) {
 			Estado estado = new Estado(label, false);
-			automato.addEstado(estado);
+			automato.addEstados(estado);
 			return estado;
 		} else {
 			return automato.estados.get(indiceEstadoExistente);
@@ -94,6 +114,7 @@ public class AutomatoPilha {
 	}
 	
 	public boolean derivaString(String string) {
+		//FAZER TOKENIZER PELOS SIMBOLOS
 		Stack<String> pilha = new Stack<String>();
 		List<String> topoPilha = new ArrayList<String>();
 		Estado estadoAtual = estadoInicial;
@@ -106,10 +127,10 @@ public class AutomatoPilha {
 			if (simboloAtual == null && estadoAtual.isFinal) {
 				return true;
 			}
-			//Realiza desempilhamentos até encontrar uma transição:
+			//Realiza desempilhamentos ate encontrar uma transicao:
 			Transicao transicao = null;
 			do {
-				transicao = procurarTransicao(estadoAtual.transicoes, simboloAtual, topoPilha);
+				transicao = procurarTransicao(estadoAtual.transicoes, simboloAtual, topoPilha, null);
 				if (transicao == null) {
 					if (pilha.isEmpty()) {
 						return false;
@@ -130,8 +151,8 @@ public class AutomatoPilha {
 		} while (true);
 	}
 	
-	public Transicao procurarTransicao(List<Transicao> transicoes, String simbolo, List<String> topoPilha) {
-		//TODO FAZER O LOOOOOOOOOOKAHEAD(1)!!!!!!
+	public Transicao procurarTransicao(List<Transicao> transicoes, String simbolo, List<String> topoPilha, String proxSimbolo) {
+		//TODO FAZER O LOOOOOOOOOOKAHEAD(1) VERIFICANDO O PRIMEIRO NAO TERMINAL QUE A NOVA TRANSICAO ADICIONA NA PILHA!!!!!!
 		Transicao transicaoEncontrada = null;
 		for (Transicao transicao : transicoes) {
 			if (transicao.simbolo != null && !transicao.simbolo.equals(simbolo)) {
@@ -166,7 +187,7 @@ public class AutomatoPilha {
 		strEstados += "\n";
 		strEstadosFinais += "\n";
 		
-		String strTransicoes = "Transições:\n";
+		String strTransicoes = "Transicoes:\n";
 		estadosIt = estados.iterator();
 		while (estadosIt.hasNext()) {
 			Estado estado = (Estado) estadosIt.next();
@@ -178,6 +199,8 @@ public class AutomatoPilha {
 	}
 
 	private static enum SecaoLeitura {
+		SECAO_SIMBOLOS_NAO_TERMINAIS("#simbolos_nao_terminais"),
+		SECAO_SIMBOLOS_TERMINAIS("#simbolos_terminais"),
 		SECAO_ESTADO_INICIAL("#estado_inicial"),
 		SECAO_ESTADOS_FINAIS("#estados_finais"),
 		SECAO_TRANSICOES("#transicoes");
