@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -69,29 +67,25 @@ public class AutomatoPilha {
 						estadoFinal.isFinal = true;
 						break;
 					case SECAO_TRANSICOES:
-						if (linha.indexOf("//") != -1) {
-							linha = linha.substring(0, linha.indexOf("//")); //Remove comentario da transicao
-						}
-						linha = linha.replaceAll(" ", ""); //Remove espacos
-						if (linha.indexOf("(") == -1 || linha.isEmpty()) {
+						if (linha.isEmpty() || linha.startsWith("//") || linha.indexOf("(") == -1) {
 							continue;
 						}
 						linha = linha.substring(linha.indexOf("("));
-						
+						linha = linha.replaceAll("  ", " ").replaceAll("\\([ ]+", "(").replaceAll("[ ]*\\?[ ]*", "?").replaceAll("[ ]+\\)", ")");
 						Matcher linhaMatcher = transitionPattern.matcher(linha);
 						if (!linhaMatcher.matches()) {
 							throw new Exception();
 						}
 						Estado estadoAnterior = obterOuAdicionarEstado(automato, linhaMatcher.group(1));
 						String simbolo = linhaMatcher.group(2);
-						simbolo = simbolo.isEmpty() ? null : simbolo;
+						simbolo = simbolo.trim().isEmpty() ? null : simbolo;
 						String[] topoPilhaEsperado = linhaMatcher.group(3).split(" ");
-						if (topoPilhaEsperado[0].isEmpty()) {
+						if (topoPilhaEsperado.length == 1 && topoPilhaEsperado[0].isEmpty()) {
 							topoPilhaEsperado = new String[0];
 						}
 						Estado estadoDestino = obterOuAdicionarEstado(automato, linhaMatcher.group(4));
 						String[] adicionarTopoPilha = linhaMatcher.group(5).split(" ");
-						if (adicionarTopoPilha[0].isEmpty()) {
+						if (adicionarTopoPilha.length == 1 && adicionarTopoPilha[0].isEmpty()) {
 							adicionarTopoPilha = new String[0];
 						}
 						estadoAnterior.addTransicao(new Transicao(simbolo, estadoDestino, topoPilhaEsperado, adicionarTopoPilha));
@@ -118,7 +112,6 @@ public class AutomatoPilha {
 	
 	public boolean derivaString(String string) {
 		String[] simbolosTerminais = tokenizePorSimbTerminais(string.replaceAll(" ", ""));
-		//FAZER TOKENIZER PELOS SIMBOLOS
 		Stack<String> pilha = new Stack<String>();
 		List<String> topoPilha = new ArrayList<String>();
 		Estado estadoAtual = estadoInicial;
@@ -156,16 +149,21 @@ public class AutomatoPilha {
 	}
 	
 	private String[] tokenizePorSimbTerminais(String string) {
-		StringBuilder regexTokenizer = new StringBuilder();
-		Iterator<String> simbIt = simbTerminais.iterator();
-		while (simbIt.hasNext()) {
-			String simb = (String) simbIt.next();
-			regexTokenizer.append(simb);
-			if (simbIt.hasNext()) {
-				regexTokenizer.append("|");
+		List<String> simbolos = new ArrayList<String>();
+		StringBuilder simbAtual = new StringBuilder();
+		for (int i = 0; i < string.length(); i++) {
+			simbAtual.append(string.charAt(i));
+			for (String simbTerminal : simbTerminais) {
+				if (simbAtual.toString().matches(simbTerminal)) {
+					if (i == string.length() - 1 ||	!(simbAtual.toString() + string.charAt(i+1)).matches(simbTerminal)) {
+						simbolos.add(simbAtual.toString());
+						simbAtual = new StringBuilder();
+						break;
+					}
+				}
 			}
 		}
-		return string.split(string);
+		return simbolos.toArray(new String[0]);
 	}
 	
 	public Transicao procurarTransicao(List<Transicao> transicoes, String simbolo, List<String> topoPilha, String proxSimbolo) {
@@ -201,10 +199,10 @@ public class AutomatoPilha {
 	public boolean lookAheadRecursao(Transicao t, String simbolo, Stack<String> pilha, String proxSimbolo, int prof) {
 		boolean axou = false;
 		Stack<String> p = new Stack<String>();
-		if (simbolo.matches(t.simbolo) && t.topoPilhaEsperado.equals(pilha.peek()) && prof > 0) return true;
+		if ((t.simbolo != null && simbolo.matches(t.simbolo)) && t.topoPilhaEsperado.equals(pilha.peek()) && prof > 0) return true;
 		if (prof > profundidade) return false;
 		for(Transicao tt : t.estadoDestino.transicoes) { //para cada transicao do estado alvo...
-			if(!tt.simbolo.matches(proxSimbolo) && tt.simbolo != null) continue; //se o simbolo da transacao nao for o proximoSimbolo nao chama recursao.
+			if(tt.simbolo != null && !proxSimbolo.matches(tt.simbolo)) continue; //se o simbolo da transacao nao for o proximoSimbolo nao chama recursao.
 			if(!tt.topoPilhaEsperado.equals(pilha.peek())) continue; //se a pilha nao for o esperado, elimina transicao.
 			p = pilha;
 			p.pop();
