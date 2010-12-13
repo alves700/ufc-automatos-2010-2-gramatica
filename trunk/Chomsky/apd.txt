@@ -1,3 +1,7 @@
+#simbolos_nao_terminais
+SG ATR FUN FUNCALL PARAMS PARAMVALS EXPBOOL OPBOOL BOOLRESULT OPCOMPAR EXPARIT OPARIT IF ELSE WHILE SB ID VAR VAL SINAL
+#simbolos_terminais
+; = function: \( \) \{ \} , (&){1,2}|(\|){1,2}|)\^) true false (<)|(>)|(<=)|(>=)|(!=)(==) (\*)|(/)|(%)|(\+)|(-) if else while [a-zA-Z]+ [0-9]+ "[a-zA-Z0-9 ]*" - $
 #estado_inicial
 qINICIO
 #estados_finais
@@ -25,32 +29,32 @@ qFIM
 1.(qCONTROL ? ? SINAL)(qSINAL ? )
 
 // ESTADO: LENDO SG (SENTENCA GLOBAL)
-2.(qSG ? ? )(qFUN ? FUN SG) //Vai para a leitura de um FUN. FUN SG na pilha serve para voltar para o SG já lido o FUN.
-2.(qSG ? ? )(qATR ? ATR SG) //Vai para a leitura de um ATR. ATR SG na pilha serve para voltar para o SG já lido o ATR.
+2.(qSG ? ? )(qFUN ? FUN SG) //Vai para a leitura de um FUN. FUN SG na pilha serve para voltar para o SG jÃ¡ lido o FUN.
+2.(qSG ? ? )(qATR ? ATR SG) //Vai para a leitura de um ATR. ATR SG na pilha serve para voltar para o SG jÃ¡ lido o ATR.
 2.(qSG ? ; ? FUN)(qSG ? ) //Leu um FUN e o separador (;), e retorna para ler um SG novamente.
 2.(qSG ? ; ? ATR)(qSG ? ) //Leu um ATR e o separador (;), e retorna para ler um SG novamente.
 2.(qSG ? ? $)(qFIM ? ) //FIM DE PROGRAMA :p
 
 // ESTADO: LENDO DECLARACAO DE FUNCAO
-3.(qFUN ? function : ? )(qID ? : FUN ID) //Leu o (function : ) e vai ler o ID da função. FUN ID na pilha serve pra voltar pra FUN já lido o ID.
-3.(qFUN ? ( ? ID)(qID ? FUN PARAMS) //Voltou da lida do ID da função, leu o '(' e vai ler PARAMS. FUN PARAMS na pilha serve pra voltar pra FUN já lido o PARAMS.
-3.(qFUN ? ) { ? PARAMS)(qPARAMS ? FUN SB) //Voltou da lida do PARAMS, leu o ')' e vai ler o corpo. FUN SBna pilha serve pra voltar pra FUN já lido PARAMS.
+3.(qFUN ? function : ? )(qID ? : FUN ID) //Leu o (function : ) e vai ler o ID da funÃ§Ã£o. FUN ID na pilha serve pra voltar pra FUN jÃ¡ lido o ID.
+3.(qFUN ? ( ? ID)(qID ? FUN PARAMS) //Voltou da lida do ID da funÃ§Ã£o, leu o '(' e vai ler PARAMS. FUN PARAMS na pilha serve pra voltar pra FUN jÃ¡ lido o PARAMS.
+3.(qFUN ? ) { ? PARAMS)(qPARAMS ? FUN SB) //Voltou da lida do PARAMS, leu o ')' e vai ler o corpo. FUN SBna pilha serve pra voltar pra FUN jÃ¡ lido PARAMS.
 3.(qFUN ? } ? SB)(qCONTROL ? ) //Voltou da lida do SB, leu o '}' e vai para o qCONTROL.
 
 // ESTADO: LENDO ATRIBUICAO
-4.(qATR ? ? )(qVAR ? ATR VAR) //Vai para a leitura de variavel. ATR VAR na pilha serve pra voltar pra ATR já lido o VAR.
-4.(qATR ? = ? VAR)(qVAL ? ATR VAL) //Voltou da leitura do VAR, leu o '=' e vai pra leitura do VAL. ATR VAL na pilha serve pra voltar pro ATR já lido o VAL.
+4.(qATR ? ? )(qVAR ? ATR VAR) //Vai para a leitura de variavel. ATR VAR na pilha serve pra voltar pra ATR jÃ¡ lido o VAR.
+4.(qATR ? = ? VAR)(qVAL ? ATR VAL) //Voltou da leitura do VAR, leu o '=' e vai pra leitura do VAL. ATR VAL na pilha serve pra voltar pro ATR jÃ¡ lido o VAL.
 4.(qATR ? ? VAL)(qCONTROL ? ) //Voltou da leitura do VAL e vai pro CONTROL.
 
 // ESTADO: LENDO DECLARACAO DE PARAMETROS
-5.(qPARAMS ? ? )(qVAR ? PARAMS VAR) //Vai para a leitura de VAR. PARAMS VAR na pilha serve pra voltar pra PARAMS já lido o VAR.
+5.(qPARAMS ? ? )(qVAR ? PARAMS VAR) //Vai para a leitura de VAR. PARAMS VAR na pilha serve pra voltar pra PARAMS jÃ¡ lido o VAR.
 5.(qPARAMS ? , ? VAR)(qPARAMS ? ) //Voltou da leitura de um VAR, leu o ',' e vai pra leitura de mais PARAMS.
-5.(qPARAMS ? ? VAR)(qCONTROL ? ) //Voltou da leitura do VAR e, como não tem ',', vai pro CONTROL.
+5.(qPARAMS ? ? VAR)(qCONTROL ? ) //Voltou da leitura do VAR e, como nÃ£o tem ',', vai pro CONTROL.
 
 // ESTADO: LENDO DECLARACAO DE PARAMETROS
-6.(qPARAMVALS ? ? )(qVAL ? PARAMVALS VAL) //Vai para a leitura de VAL. PARAMVALS VAL na pilha serve pra voltar pra PARAMVALS já lido o VAR.
+6.(qPARAMVALS ? ? )(qVAL ? PARAMVALS VAL) //Vai para a leitura de VAL. PARAMVALS VAL na pilha serve pra voltar pra PARAMVALS jÃ¡ lido o VAR.
 6.(qPARAMVALS ? , ? VAL)(qPARAMVALS ? ) //Voltou da leitura de um VAL, leu o ',' e vai pra leitura de mais PARAMVALS.
-6.(qPARAMVALS ? ? VAL)(qCONTROL ? ) //Voltou da leitura de um VAL e, como não tem ',', vai pro CONTROL.
+6.(qPARAMVALS ? ? VAL)(qCONTROL ? ) //Voltou da leitura de um VAL e, como nÃ£o tem ',', vai pro CONTROL.
 
 // ESTADO: LENDO UM EXPBOOL
 7.
@@ -59,9 +63,23 @@ qFIM
 14.(qID ? [a-zA-Z]+ ? )(qCONTROL ? ) //Leu o ID e volta para o CONTROL. :p
 
 // ESTADO: LENDO VARIAVEL
-15.(qVAR ? ? )(qID ? ) //Vai para a leitura do ID. Não precisa pôr nada na pilha, pois o ID vai pro CONTROL! Né?! :p
+15.(qVAR ? ? )(qID ? ) //Vai para a leitura do ID. NÃ£o precisa pÃ´r nada na pilha, pois o ID vai pro CONTROL! NÃ©?! :p
+
+VAL->VAR
+VAL->EXPARIT
+VAL->SINAL[0-9]+
+VAL->"[a-zA-Z0-9 ]*"
+VAL->null
+VAL->FUNCALL
 
 // ESTADO: LENDO UM VAL
+16.((qVAL ? "[a-zA-Z0-9 ]*" ? )(qCONTROL ? ))
+16.((qVAL ? [a-zA-Z]+ ? )(qVAR ? VAR))
+16.((qVAL ? ? )(qEXPARIT ? ))
+16.((qVAL ? ? )(qSINAL ? ))
+16.((qVAL ? ? )(qSINAL ? ))
+
+16.
 16.
 
 // ESTADO: LENDO UM SINAL
