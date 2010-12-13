@@ -117,15 +117,16 @@ public class AutomatoPilha {
 	}
 	
 	public boolean derivaString(String string) {
+		String[] simbolosTerminais = tokenizePorSimbTerminais(string.replaceAll(" ", ""));
 		//FAZER TOKENIZER PELOS SIMBOLOS
 		Stack<String> pilha = new Stack<String>();
 		List<String> topoPilha = new ArrayList<String>();
 		Estado estadoAtual = estadoInicial;
-		int posicaoStr = 0;
+		int indiceSimb = 0;
 		do {
 			String simboloAtual = null;
-			if (posicaoStr < string.length()) {
-				simboloAtual = Character.toString(string.charAt(posicaoStr));
+			if (indiceSimb < simbolosTerminais.length) {
+				simboloAtual = simbolosTerminais[indiceSimb];
 			}
 			if (simboloAtual == null && estadoAtual.isFinal) {
 				return true;
@@ -149,9 +150,22 @@ public class AutomatoPilha {
 			}			
 			estadoAtual = transicao.estadoDestino;
 			if (transicao.simbolo != null) {
-				posicaoStr++;
+				indiceSimb++;
 			}
 		} while (true);
+	}
+	
+	private String[] tokenizePorSimbTerminais(String string) {
+		StringBuilder regexTokenizer = new StringBuilder();
+		Iterator<String> simbIt = simbTerminais.iterator();
+		while (simbIt.hasNext()) {
+			String simb = (String) simbIt.next();
+			regexTokenizer.append(simb);
+			if (simbIt.hasNext()) {
+				regexTokenizer.append("|");
+			}
+		}
+		return string.split(string);
 	}
 	
 	public Transicao procurarTransicao(List<Transicao> transicoes, String simbolo, List<String> topoPilha, String proxSimbolo) {
