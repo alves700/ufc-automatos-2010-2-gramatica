@@ -30,7 +30,7 @@ public class AutomatoPilha {
 			SecaoLeitura secaoLeitura = SecaoLeitura.SECAO_ESTADO_INICIAL;
 			String linha = null;
 			while ((linha = reader.readLine()) != null) {
-				linha = linha.replaceAll(" ", "");
+				linha = linha.trim();
 				SecaoLeitura proxSecaoLeitura = SecaoLeitura.getByIdentificador(linha);
 				if (proxSecaoLeitura != null) {
 					secaoLeitura = proxSecaoLeitura;
@@ -46,6 +46,15 @@ public class AutomatoPilha {
 						estadoFinal.isFinal = true;
 						break;
 					case SECAO_TRANSICOES:
+						if (linha.indexOf("//") != -1) {
+							linha = linha.substring(0, linha.indexOf("//")); //Remove comentário da transição
+						}
+						linha = linha.replaceAll(" ", "");
+						if (linha.indexOf("(") == -1 || linha.isEmpty()) {
+							continue;
+						}
+						linha = linha.substring(linha.indexOf("("));
+						
 						Matcher linhaMatcher = transitionPattern.matcher(linha);
 						if (!linhaMatcher.matches()) {
 							throw new Exception();
@@ -122,8 +131,7 @@ public class AutomatoPilha {
 	}
 	
 	public Transicao procurarTransicao(List<Transicao> transicoes, String simbolo, List<String> topoPilha) {
-		//TODO RETIRAR VERIFICACAO DE UMBIGUIDADE!!!
-		//TODO LOOOOOOOOOOKAHEAD(1)!!!!!!
+		//TODO FAZER O LOOOOOOOOOOKAHEAD(1)!!!!!!
 		Transicao transicaoEncontrada = null;
 		for (Transicao transicao : transicoes) {
 			if (transicao.simbolo != null && !transicao.simbolo.equals(simbolo)) {
