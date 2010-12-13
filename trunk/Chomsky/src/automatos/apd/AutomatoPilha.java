@@ -175,18 +175,18 @@ public class AutomatoPilha {
 	Transicao r = null;
 	profundidade = simbNaoTerminais.size();
 	for(Transicao t: transicoes) {
-		if (lookAheadRecursao(t, simbolo, topoPilha, proxSimbolo, 0)) { r = t; break; }
+		if (lookAheadRecursao(t, proxSimbolo, t.adicionarTopoPilha, proxSimbolo, 0)) { r = t; break; } //manda desse jeito pra dar erro no primero teste e comecar a busca...
 	}
 	return r;
 	}
 	
 	public boolean lookAheadRecursao(Transicao t, String simbolo, List<String> topoPilha, String proxSimbolo, int prof) {
 		boolean axou = false;
-		if ((t.simbolo == null || simbolo.matches(t.simbolo)) && t.topoPilhaEsperado.equals(topoPilha)) return true;
+		if ((t.simbolo == null || simbolo.matches(t.simbolo)) && t.topoPilhaEsperado.equals(topoPilha.get(0))) return true;
 		if (prof > profundidade) return false;
 		for(Transicao tt : t.estadoDestino.transicoes) { //para cada transicao do estado alvo...
 			//if(!tt.simbolo.matches(proxSimbolo)) continue; //se o simbolo da transacao nao for o proximoSimbolo nao chama recursa.
-			if (lookAheadRecursao(tt, proxSimbolo, t.adicionarTopoPilha, proxSimbolo,prof+1)) { axou = true; break; } //se encontro um para o loop q chama a recursao.
+			if (lookAheadRecursao(tt, proxSimbolo, t.adicionarTopoPilha , proxSimbolo,prof+1)) { axou = true; break; } //se encontro um para o loop q chama a recursao.
 		}
 		return axou;
 	}
