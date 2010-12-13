@@ -39,7 +39,7 @@ qFIM
 3.(qFUN ? : ? FUN2)(qID ? : ID FUN ID)
 3.(qFUN ? \( ? ID)(qPARAMS ? PARAMS FUN PARAMS)
 3.(qFUN ? \) ? PARAMS)(qFUN ? FUN3)
-3.(qFUN ? {\ ? FUN3)(qSB ? SB FUN SB)
+3.(qFUN ? \{ ? FUN3)(qSB ? SB FUN SB)
 3.(qFUN ? \} ? SB)(qFORWARD ? )
 
 // ESTADO: LENDO ATRIBUICAO

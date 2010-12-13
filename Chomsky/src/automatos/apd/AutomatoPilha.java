@@ -111,15 +111,15 @@ public class AutomatoPilha {
 	}
 	
 	public boolean derivaString(String string) {
-		String[] simbolosTerminais = tokenizePorSimbTerminais(string.replaceAll(" ", ""));
+		String[] simbolosString = tokenizePorSimbTerminais(string.replaceAll(" ", ""));
 		Stack<String> pilha = new Stack<String>();
 		List<String> topoPilha = new ArrayList<String>();
 		Estado estadoAtual = estadoInicial;
 		int indiceSimb = 0;
 		do {
 			String simboloAtual = null;
-			if (indiceSimb < simbolosTerminais.length) {
-				simboloAtual = simbolosTerminais[indiceSimb];
+			if (indiceSimb < simbolosString.length) {
+				simboloAtual = simbolosString[indiceSimb];
 			}
 			if (simboloAtual == null && estadoAtual.isFinal) {
 				return true;
@@ -127,7 +127,11 @@ public class AutomatoPilha {
 			//Realiza desempilhamentos ate encontrar uma transicao:
 			Transicao transicao = null;
 			do {
-				transicao = procurarTransicao(estadoAtual.transicoes, simboloAtual, topoPilha, null);
+				String proxSimbolo = null;
+				if (indiceSimb < simbolosString.length - 1) {
+					proxSimbolo = simbolosString[indiceSimb + 1];
+				}
+				transicao = procurarTransicao(estadoAtual.transicoes, simboloAtual, topoPilha, proxSimbolo);
 				if (transicao == null) {
 					if (pilha.isEmpty()) {
 						return false;
