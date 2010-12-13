@@ -70,7 +70,7 @@ qFIM
 7.(qBOOLRESULT ?  ? VAL)(qOPCOMPAR ? OPCOMPAR BOOLRESULT OPCOMPAR)
 7.(qBOOLRESULT ?  ? OPCOMPAR)(qFORWARD ? )
 
-7.(qOPCOMPAR ? ((<)|(>)|(<=)|(>=)|(!=)(==)) ? OPCOMPAR)(qFORWARD, )
+7.(qOPCOMPAR ? ((<)|(>)|(<=)|(>=)|(!=)(==)) ? OPCOMPAR)(qFORWARD ? )
 
 //ESTADO: LENDO UM BLOCO DE SELEÇÃO IF
 8.(qIF ? if ? IF)(qIF ? IF2) //Leu 'if'
