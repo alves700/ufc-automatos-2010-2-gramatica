@@ -196,10 +196,11 @@ public class AutomatoPilha {
 	
 	public boolean lookAheadRecursao(Transicao t, String simbolo, List<String> topoPilha, String proxSimbolo, int prof) {
 		boolean axou = false;
-		if ((t.simbolo == null || simbolo.matches(t.simbolo)) && t.topoPilhaEsperado.equals(topoPilha.get(0))) return true;
+		
+		if (simbolo.matches(t.simbolo) && t.topoPilhaEsperado.equals(topoPilha.get(0))) return true;
 		if (prof > profundidade) return false;
 		for(Transicao tt : t.estadoDestino.transicoes) { //para cada transicao do estado alvo...
-			//if(!tt.simbolo.matches(proxSimbolo)) continue; //se o simbolo da transacao nao for o proximoSimbolo nao chama recursa.
+			if(tt.simbolo.matches(proxSimbolo) && tt.simbolo != null) continue; //se o simbolo da transacao nao for o proximoSimbolo nao chama recursao.
 			if (lookAheadRecursao(tt, proxSimbolo, t.adicionarTopoPilha , proxSimbolo,prof+1)) { axou = true; break; } //se encontro um para o loop q chama a recursao.
 		}
 		return axou;
